@@ -21,6 +21,15 @@
   #stage a{color:inherit}
   #stage h1,#stage h2{letter-spacing:-.01em}
   #stage section b{font-weight:900;background:linear-gradient(transparent 62%,rgba(242,166,90,.42) 62%);padding:0 3px;border-radius:3px}
+  #topbar{position:absolute;left:0;right:0;top:0;height:72px;display:flex;align-items:stretch;background:#0E1520;z-index:5}
+  #topbar .seg{flex:1;display:flex;align-items:center;justify-content:center;gap:12px;font-size:30px;font-weight:700;color:#7F90A8;cursor:pointer;border-right:1px solid #1E2B3F}
+  #topbar .seg:last-of-type{border-right:none}
+  #topbar .seg small{font-size:22px;font-weight:400;opacity:.85}
+  #topbar .seg.done{color:#C9D3E0}
+  #topbar .seg.on{background:#F2A65A;color:#1B2A41}
+  #topbar .prog{position:absolute;left:0;right:0;bottom:0;height:6px;background:#1E2B3F}
+  #topbar .prog i{display:block;height:100%;width:0;background:#F2A65A;transition:width .3s}
+  @media (prefers-reduced-motion:reduce){#topbar .prog i{transition:none}}
   #stage aside.notes{display:none}
   #bar{position:fixed;left:0;right:0;bottom:0;height:56px;display:flex;align-items:center;justify-content:center;gap:12px;background:#0E1520;color:#DCE3EC;font-size:15px;padding:0 max(16px,env(safe-area-inset-right,0px)) env(safe-area-inset-bottom,0px) max(16px,env(safe-area-inset-left,0px))}
   #bar button{font:inherit;background:#24364F;color:#F6F2E9;border:none;border-radius:8px;padding:8px 14px;cursor:pointer}
@@ -36,12 +45,12 @@
 <body>
 <div id="viewport"><div id="stage">
 <section id="cover" style="background:#1B2A41;color:#F6F2E9;font-family:'Noto Sans KR', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;justify-content:center;gap:40px">
-<p style="font-size:36px;font-weight:700;color:#F2A65A">중학교 교사 연수 · 60분</p>
-<h1 style="font-family:'Noto Sans KR', Arial, sans-serif;font-size:150px;font-weight:900;line-height:1.1;color:#F6F2E9">말로 만드는 수업 앱</h1>
-<p style="font-size:56px;color:#F6F2E9">교사를 위한 바이브코딩 첫걸음</p>
+<p style="font-size:30px;font-weight:700;color:#F2A65A">중학교 교사 연수 · 60분</p>
+<h1 style="font-family:'Noto Sans KR', Arial, sans-serif;font-size:144px;font-weight:900;line-height:1.1;color:#F6F2E9">말로 만드는 수업 앱</h1>
+<p style="font-size:48px;color:#F6F2E9">교사를 위한 바이브코딩 첫걸음</p>
 <hr style="width:160px;border-top:6px solid #F2A65A">
-<p style="font-size:36px;color:#BFC8D6">바이브코딩 이해 → 에이전트 AI → 교사가 만든 앱 → 직접 만들어 보기</p>
-<p style="position:absolute;left:128px;bottom:96px;width:1696px;font-size:32px;color:#BFC8D6">강사 윤슬기 · 서울문영여자중학교 역사 교사</p>
+<p style="font-size:30px;color:#BFC8D6">바이브코딩 이해 → 에이전트 AI → 교사가 만든 앱 → 직접 만들어 보기</p>
+<p style="position:absolute;left:128px;bottom:96px;width:1664px;font-size:26px;color:#BFC8D6">강사 윤슬기 · 서울문영여자중학교 역사 교사</p>
 <aside class="notes">인사와 함께 오늘의 목표를 한 문장으로 말합니다. "오늘 1시간이 끝나면, 선생님들 모두 직접 만든 앱 하나를 들고 나가시게 됩니다." 코딩을 전혀 몰라도 된다는 점을 먼저 안심시켜 주세요.
 
 [연수 전날까지 사전 안내(문자·메신저)로 꼭 요청할 것]
@@ -50,12 +59,12 @@
 3. 강사는 연수 장소의 와이파이로 슬라이드 주소와 /helper 주소가 열리는지, 참석자 수만큼 동시에 접속해도 끊기지 않는지 미리 확인합니다. 와이파이가 불안하면 휴대폰 핫스팟을 예비로 준비하세요.
 4. 강사도 같은 AI 서비스로 ‘발표자 뽑기’ 시연을 미리 한 번 해 두고, 결과 화면을 캡처해 둡니다(시연이 실패할 때 대신 보여 줄 자료).</aside>
 </section>
-<section id="agenda" style="background:#F6F2E9;color:#1F2937;font-family:'Noto Sans KR', Arial, sans-serif;padding:84px 112px 130px;display:flex;flex-direction:column;gap:48px">
+<section id="agenda" style="background:#F6F2E9;color:#1F2937;font-family:'Noto Sans KR', Arial, sans-serif;padding:116px 128px 100px;display:flex;flex-direction:column;gap:48px">
 <div style="display:flex;flex-direction:column;gap:12px">
-<p style="font-size:32px;font-weight:700;color:#B4501E">연수 안내</p>
+<p style="font-size:30px;font-weight:700;color:#B4501E">연수 안내</p>
 <h2 style="font-family:'Noto Sans KR', Arial, sans-serif;font-size:84px;font-weight:900;line-height:1.15;color:#1B2A41">오늘의 1시간</h2>
 </div>
-<table style="width:1696px;font-size:36px;color:#1F2937;font-family:'Noto Sans KR', Arial, sans-serif">
+<table style="width:1664px;font-size:30px;color:#1F2937;font-family:'Noto Sans KR', Arial, sans-serif">
 <tr style="background:#1B2A41"><th style="width:16%;color:#F6F2E9;padding:20px 28px">시간</th><th style="width:14%;color:#F6F2E9;padding:20px 28px">단계</th><th style="width:44%;color:#F6F2E9;padding:20px 28px">내용</th><th style="width:26%;color:#F6F2E9;padding:20px 28px">선생님이 하는 일</th></tr>
 <tr style="background:#FFFDF8"><td style="padding:16px 28px">0–4분</td><td style="padding:16px 28px">도입</td><td style="padding:16px 28px">“이런 도구 있었으면…”</td><td style="padding:16px 28px">생각 떠올리기</td></tr>
 <tr style="background:#F6F2E9"><td style="padding:16px 28px">4–15분</td><td style="padding:16px 28px">개념</td><td style="padding:16px 28px">바이브코딩과 에이전트 AI</td><td style="padding:16px 28px">듣고 질문하기</td></tr>
@@ -64,56 +73,54 @@
 <tr style="background:#FCE9DC"><td style="padding:16px 28px"><b>28–53분</b></td><td style="padding:16px 28px"><b>실습</b></td><td style="padding:16px 28px"><b>프롬프트로 앱 만들고 고치기</b></td><td style="padding:16px 28px"><b>직접 만들기 (25분)</b></td></tr>
 <tr style="background:#FFFDF8"><td style="padding:16px 28px">53–60분</td><td style="padding:16px 28px">정리</td><td style="padding:16px 28px">주의할 점과 다음 걸음</td><td style="padding:16px 28px">나누기</td></tr>
 </table>
-<p style="position:absolute;left:112px;bottom:44px;width:1696px;font-size:30px;color:#6B7280">교사를 위한 바이브코딩 첫걸음</p>
 <aside class="notes">오늘 시간의 40%(25분)는 선생님들이 직접 앱을 만드는 시간이라는 점을 강조합니다. 개념 설명은 11분, 사례는 7분으로 짧게 하고, 실습 안내 6분 뒤에 곧바로 만들기에 들어갑니다. 시간이 밀리면 줄일 곳은 ‘개념’(특히 ‘어디에서 해 볼 수 있을까?’)과 ‘사례’이고, 실습 25분은 줄이지 않습니다.</aside>
 </section>
-<section id="hook" data-transition="fade" style="background:#1B2A41;color:#F6F2E9;font-family:'Noto Sans KR', Arial, sans-serif;padding:84px 112px 130px;display:flex;flex-direction:column;gap:56px">
+<section id="hook" data-transition="fade" style="background:#1B2A41;color:#F6F2E9;font-family:'Noto Sans KR', Arial, sans-serif;padding:116px 128px 100px;display:flex;flex-direction:column;gap:56px">
 <div style="display:flex;flex-direction:column;gap:12px">
-<p style="font-size:32px;font-weight:700;color:#F2A65A">도입 · 0–4분</p>
+<p style="font-size:30px;font-weight:700;color:#F2A65A">도입 · 0–4분</p>
 <h2 style="font-family:'Noto Sans KR', Arial, sans-serif;font-size:84px;font-weight:900;line-height:1.15;color:#F6F2E9">수업하다가 이런 생각, 해 보신 적 있나요?</h2>
 </div>
 <div style="display:flex;flex-direction:row;gap:40px">
 <div style="flex:1;background:#24364F;border-radius:20px;padding:44px">
-<p style="font-size:45px;line-height:1.5;color:#F6F2E9">“발표 순서를 공정하게 정해 주는 도구가 있으면…”</p>
+<p style="font-size:38px;line-height:1.5;color:#F6F2E9">“발표 순서를 공정하게 정해 주는 도구가 있으면…”</p>
 </div>
 <div style="flex:1;background:#24364F;border-radius:20px;padding:44px">
-<p style="font-size:45px;line-height:1.5;color:#F6F2E9">“단원 퀴즈를 학생들이 휴대폰으로 바로 풀면…”</p>
+<p style="font-size:38px;line-height:1.5;color:#F6F2E9">“단원 퀴즈를 학생들이 휴대폰으로 바로 풀면…”</p>
 </div>
 <div style="flex:1;background:#24364F;border-radius:20px;padding:44px">
-<p style="font-size:45px;line-height:1.5;color:#F6F2E9">“우리 반 수행평가 일정을 한 화면에 모아 보면…”</p>
+<p style="font-size:38px;line-height:1.5;color:#F6F2E9">“우리 반 수행평가 일정을 한 화면에 모아 보면…”</p>
 </div>
 </div>
 <div style="flex:1"></div>
-<p style="font-size:52px;font-weight:700;color:#F2A65A">오늘은 이런 도구를 ‘말’로 직접 만들어 봅니다.</p>
+<p style="font-size:44px;font-weight:700;color:#F2A65A">오늘은 이런 도구를 ‘말’로 직접 만들어 봅니다.</p>
 <aside class="notes">참석한 선생님 두세 분께 "수업이나 업무에서 이런 도구가 있었으면 좋겠다고 생각한 적이 있는지" 물어봅니다. 나온 아이디어를 기억해 두었다가 실습 시간에 다시 연결하면 좋습니다. 개발자에게 부탁하거나 유료 프로그램을 찾던 일을, 이제는 교사가 직접 할 수 있다는 흐름으로 넘어갑니다.</aside>
 </section>
-<section id="define" style="background:#F6F2E9;color:#1F2937;font-family:'Noto Sans KR', Arial, sans-serif;padding:84px 112px 130px;display:flex;flex-direction:column;gap:44px">
+<section id="define" style="background:#F6F2E9;color:#1F2937;font-family:'Noto Sans KR', Arial, sans-serif;padding:116px 128px 100px;display:flex;flex-direction:column;gap:44px">
 <div style="display:flex;flex-direction:column;gap:12px">
-<p style="font-size:36px;font-weight:700;color:#B4501E">1 · 바이브코딩이란?</p>
+<p style="font-size:30px;font-weight:700;color:#B4501E">1 · 바이브코딩이란?</p>
 <h2 style="font-family:'Noto Sans KR', Arial, sans-serif;font-size:84px;font-weight:900;line-height:1.15;color:#1B2A41">코드를 쓰는 대신, 원하는 것을 말로 설명한다</h2>
 </div>
 <div style="background:#FFFDF8;border:2px solid #DDD5C3;border-left:12px solid #B4501E;border-radius:20px;padding:52px 56px">
-<p style="font-size:50px;line-height:1.55;color:#1F2937"><b>바이브코딩(Vibe Coding)</b>이란 만들고 싶은 것을 일상 언어로 설명하면 AI가 코드를 쓰고, 사람은 결과를 보며 “이렇게 바꿔 줘”라고 다듬어 가는 방식입니다.</p>
+<p style="font-size:38px;line-height:1.55;color:#1F2937"><b>바이브코딩(Vibe Coding)</b>이란 만들고 싶은 것을 일상 언어로 설명하면 AI가 코드를 쓰고, 사람은 결과를 보며 “이렇게 바꿔 줘”라고 다듬어 가는 방식입니다.</p>
 </div>
 <div style="display:flex;flex-direction:row;gap:40px">
 <div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#EBE5D6;border-radius:20px;padding:36px 44px">
-<h3 style="font-size:48px;font-weight:700;color:#2B5E9E">2025년 2월</h3>
-<p style="font-size:38px;line-height:1.5;color:#374151">AI 연구자 안드레이 카파시(Andrej Karpathy)가 SNS에 처음 쓴 표현</p>
+<h3 style="font-size:36px;font-weight:700;color:#2B5E9E">2025년 2월</h3>
+<p style="font-size:28px;line-height:1.5;color:#374151">AI 연구자 안드레이 카파시(Andrej Karpathy)가 SNS에 처음 쓴 표현</p>
 </div>
 <div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#EBE5D6;border-radius:20px;padding:36px 44px">
-<h3 style="font-size:48px;font-weight:700;color:#2B5E9E">2025년 11월</h3>
-<p style="font-size:38px;line-height:1.5;color:#374151">영국 콜린스 사전이 ‘올해의 단어’로 선정</p>
+<h3 style="font-size:36px;font-weight:700;color:#2B5E9E">2025년 11월</h3>
+<p style="font-size:28px;line-height:1.5;color:#374151">영국 콜린스 사전이 ‘올해의 단어’로 선정</p>
 </div>
 </div>
-<p style="position:absolute;left:112px;bottom:44px;width:1696px;font-size:34px;color:#6B7280">개념 · 4–15분</p>
 <aside class="notes">‘바이브(vibe)’는 느낌, 분위기라는 뜻입니다. 코드 한 줄 한 줄을 따지기보다 “이런 느낌의 앱”을 말로 설명하고, 결과를 보면서 고쳐 나간다는 의미로 쓰입니다. 카파시는 2025년 2월 SNS(X)에 이 표현을 처음 썼고, 같은 해 11월 콜린스 사전이 2025년 올해의 단어로 선정했습니다. 핵심은 ‘코딩을 배우는 것’이 아니라 ‘원하는 것을 정확히 설명하는 것’이라는 점입니다.</aside>
 </section>
-<section id="compare" style="background:#F6F2E9;color:#1F2937;font-family:'Noto Sans KR', Arial, sans-serif;padding:84px 112px 130px;display:flex;flex-direction:column;gap:44px">
+<section id="compare" style="background:#F6F2E9;color:#1F2937;font-family:'Noto Sans KR', Arial, sans-serif;padding:116px 128px 100px;display:flex;flex-direction:column;gap:44px">
 <div style="display:flex;flex-direction:column;gap:12px">
-<p style="font-size:35px;font-weight:700;color:#B4501E">1 · 바이브코딩이란?</p>
+<p style="font-size:30px;font-weight:700;color:#B4501E">1 · 바이브코딩이란?</p>
 <h2 style="font-family:'Noto Sans KR', Arial, sans-serif;font-size:84px;font-weight:900;line-height:1.15;color:#1B2A41">예전 방식과 무엇이 다를까?</h2>
 </div>
-<table style="width:1696px;font-size:39px;color:#1F2937;font-family:'Noto Sans KR', Arial, sans-serif">
+<table style="width:1664px;font-size:30px;color:#1F2937;font-family:'Noto Sans KR', Arial, sans-serif">
 <tr style="background:#1B2A41"><th style="width:22%;color:#F6F2E9;padding:20px 28px">구분</th><th style="width:39%;color:#BFC8D6;padding:20px 28px">예전 방식</th><th style="width:39%;color:#F2A65A;padding:20px 28px">바이브코딩</th></tr>
 <tr style="background:#FFFDF8"><td style="padding:20px 28px"><b>시작하려면</b></td><td style="padding:20px 28px">프로그래밍 문법부터 공부</td><td style="padding:20px 28px">하고 싶은 일을 문장으로 설명</td></tr>
 <tr style="background:#F6F2E9"><td style="padding:20px 28px"><b>내가 하는 일</b></td><td style="padding:20px 28px">코드를 한 줄씩 직접 작성</td><td style="padding:20px 28px">설명하고, 확인하고, 고쳐 달라고 요청</td></tr>
@@ -121,240 +128,232 @@
 <tr style="background:#F6F2E9"><td style="padding:20px 28px"><b>첫 결과물까지</b></td><td style="padding:20px 28px">기초를 익히는 데만 몇 달</td><td style="padding:20px 28px">몇 분 안에 화면을 직접 확인</td></tr>
 <tr style="background:#FCE9DC"><td style="padding:20px 28px"><b>교사의 역할</b></td><td style="padding:20px 28px">개발자에게 부탁하는 사람</td><td style="padding:20px 28px"><b>기획자이자 검수자</b></td></tr>
 </table>
-<p style="position:absolute;left:112px;bottom:44px;width:1696px;font-size:32px;color:#6B7280">개념 · 4–15분</p>
 <aside class="notes">마지막 줄이 핵심입니다. 교사는 코드를 쓰는 사람이 아니라, 무엇을 만들지 정하고(기획자) 결과가 수업에 맞는지 확인하는 사람(검수자)이 됩니다. 단, 복잡한 앱일수록 AI도 실수를 하므로 ‘확인하는 역할’은 사라지지 않는다는 점을 함께 말해 주세요.</aside>
 </section>
-<section id="teacher" style="background:#F6F2E9;color:#1F2937;font-family:'Noto Sans KR', Arial, sans-serif;padding:84px 112px 130px;display:flex;flex-direction:column;gap:40px">
+<section id="teacher" style="background:#F6F2E9;color:#1F2937;font-family:'Noto Sans KR', Arial, sans-serif;padding:116px 128px 100px;display:flex;flex-direction:column;gap:40px">
 <div style="display:flex;flex-direction:column;gap:12px">
-<p style="font-size:37px;font-weight:700;color:#B4501E">1 · 바이브코딩이란?</p>
+<p style="font-size:30px;font-weight:700;color:#B4501E">1 · 바이브코딩이란?</p>
 <h2 style="font-family:'Noto Sans KR', Arial, sans-serif;font-size:84px;font-weight:900;line-height:1.15;color:#1B2A41">교사는 이미 절반은 준비되어 있습니다</h2>
 </div>
-<p style="font-size:60px;font-weight:700;color:#2B5E9E">좋은 프롬프트 = 좋은 수업 설계</p>
+<p style="font-size:44px;font-weight:700;color:#2B5E9E">좋은 프롬프트 = 좋은 수업 설계</p>
 <div style="display:flex;flex-direction:row;gap:40px">
 <div style="flex:1;display:flex;flex-direction:column;gap:10px;background:#FFFDF8;border:2px solid #DDD5C3;border-radius:20px;padding:36px 40px">
-<p style="font-size:37px;color:#6B7280">수업에서는</p>
-<h3 style="font-size:55px;font-weight:700;color:#1B2A41">학습 목표</h3>
-<p style="font-size:37px;color:#6B7280">↓ 앱에서는</p>
-<h3 style="font-size:55px;font-weight:700;color:#B4501E">앱의 목적</h3>
-<p style="font-size:37px;line-height:1.45;color:#374151">“무엇을 위해 만드나?”</p>
+<p style="font-size:26px;color:#6B7280">수업에서는</p>
+<h3 style="font-size:40px;font-weight:700;color:#1B2A41">학습 목표</h3>
+<p style="font-size:26px;color:#6B7280">↓ 앱에서는</p>
+<h3 style="font-size:40px;font-weight:700;color:#B4501E">앱의 목적</h3>
+<p style="font-size:26px;line-height:1.45;color:#374151">“무엇을 위해 만드나?”</p>
 </div>
 <div style="flex:1;display:flex;flex-direction:column;gap:10px;background:#FFFDF8;border:2px solid #DDD5C3;border-radius:20px;padding:36px 40px">
-<p style="font-size:37px;color:#6B7280">수업에서는</p>
-<h3 style="font-size:55px;font-weight:700;color:#1B2A41">학생 활동</h3>
-<p style="font-size:37px;color:#6B7280">↓ 앱에서는</p>
-<h3 style="font-size:55px;font-weight:700;color:#B4501E">핵심 기능</h3>
-<p style="font-size:37px;line-height:1.45;color:#374151">“학생은 무엇을 누르고 하나?”</p>
+<p style="font-size:26px;color:#6B7280">수업에서는</p>
+<h3 style="font-size:40px;font-weight:700;color:#1B2A41">학생 활동</h3>
+<p style="font-size:26px;color:#6B7280">↓ 앱에서는</p>
+<h3 style="font-size:40px;font-weight:700;color:#B4501E">핵심 기능</h3>
+<p style="font-size:26px;line-height:1.45;color:#374151">“학생은 무엇을 누르고 하나?”</p>
 </div>
 <div style="flex:1;display:flex;flex-direction:column;gap:10px;background:#FFFDF8;border:2px solid #DDD5C3;border-radius:20px;padding:36px 40px">
-<p style="font-size:37px;color:#6B7280">수업에서는</p>
-<h3 style="font-size:55px;font-weight:700;color:#1B2A41">수업 성찰</h3>
-<p style="font-size:37px;color:#6B7280">↓ 앱에서는</p>
-<h3 style="font-size:55px;font-weight:700;color:#B4501E">써 보고 고치기</h3>
-<p style="font-size:37px;line-height:1.45;color:#374151">“무엇이 불편했나?”</p>
+<p style="font-size:26px;color:#6B7280">수업에서는</p>
+<h3 style="font-size:40px;font-weight:700;color:#1B2A41">수업 성찰</h3>
+<p style="font-size:26px;color:#6B7280">↓ 앱에서는</p>
+<h3 style="font-size:40px;font-weight:700;color:#B4501E">써 보고 고치기</h3>
+<p style="font-size:26px;line-height:1.45;color:#374151">“무엇이 불편했나?”</p>
 </div>
 </div>
-<p style="position:absolute;left:112px;bottom:44px;width:1696px;font-size:34px;color:#6B7280">개념 · 4–15분</p>
 <aside class="notes">선생님들이 매일 하는 일, 즉 학습 목표를 세우고 학생 활동을 설계하고 수업 후에 돌아보는 일이 그대로 앱 만들기의 순서가 됩니다. 코딩 지식보다 “누가, 어떤 상황에서, 무엇을 하게 할 것인가”를 분명히 말하는 능력이 더 중요합니다.</aside>
 </section>
-<section id="agent" style="background:#F6F2E9;color:#1F2937;font-family:'Noto Sans KR', Arial, sans-serif;padding:84px 112px 130px;display:flex;flex-direction:column;gap:44px">
+<section id="agent" style="background:#F6F2E9;color:#1F2937;font-family:'Noto Sans KR', Arial, sans-serif;padding:116px 128px 100px;display:flex;flex-direction:column;gap:44px">
 <div style="display:flex;flex-direction:column;gap:12px">
-<p style="font-size:35px;font-weight:700;color:#B4501E">2 · 에이전트 AI</p>
+<p style="font-size:30px;font-weight:700;color:#B4501E">2 · 에이전트 AI</p>
 <h2 style="font-family:'Noto Sans KR', Arial, sans-serif;font-size:84px;font-weight:900;line-height:1.15;color:#1B2A41">대답하는 AI에서, 일을 끝까지 해내는 AI로</h2>
 </div>
 <div style="display:flex;flex-direction:row;gap:40px">
 <div style="flex:1;display:flex;flex-direction:column;gap:16px;background:#FFFDF8;border:2px solid #DDD5C3;border-radius:20px;padding:44px 48px">
-<h3 style="font-size:56px;font-weight:700;color:#1B2A41">챗봇형 AI</h3>
-<p style="font-size:39px;line-height:1.5;color:#1F2937">질문하면 <b>답을 알려 준다</b></p>
+<h3 style="font-size:44px;font-weight:700;color:#1B2A41">챗봇형 AI</h3>
+<p style="font-size:30px;line-height:1.5;color:#1F2937">질문하면 <b>답을 알려 준다</b></p>
 <hr style="border-top:2px solid #DDD5C3">
-<p style="font-size:32px;font-weight:700;color:#6B7280">비유하면</p>
-<p style="font-size:39px;line-height:1.5;color:#1F2937">레시피를 알려 주는 요리 선생님</p>
-<p style="font-size:32px;font-weight:700;color:#6B7280">결과는</p>
-<p style="font-size:39px;line-height:1.5;color:#1F2937">설명, 코드 조각 → 실행은 내가</p>
+<p style="font-size:24px;font-weight:700;color:#6B7280">비유하면</p>
+<p style="font-size:30px;line-height:1.5;color:#1F2937">레시피를 알려 주는 요리 선생님</p>
+<p style="font-size:24px;font-weight:700;color:#6B7280">결과는</p>
+<p style="font-size:30px;line-height:1.5;color:#1F2937">설명, 코드 조각 → 실행은 내가</p>
 </div>
 <div style="flex:1;display:flex;flex-direction:column;gap:16px;background:#1B2A41;border-radius:20px;padding:44px 48px">
-<h3 style="font-size:56px;font-weight:700;color:#F2A65A">에이전트형 AI</h3>
-<p style="font-size:39px;line-height:1.5;color:#F6F2E9">목표를 주면 <b>스스로 계획하고, 도구를 쓰고, 확인하며</b> 끝까지 해낸다</p>
+<h3 style="font-size:44px;font-weight:700;color:#F2A65A">에이전트형 AI</h3>
+<p style="font-size:30px;line-height:1.5;color:#F6F2E9">목표를 주면 <b>스스로 계획하고, 도구를 쓰고, 확인하며</b> 끝까지 해낸다</p>
 <hr style="border-top:2px solid #3B4F6B">
-<p style="font-size:32px;font-weight:700;color:#BFC8D6">비유하면</p>
-<p style="font-size:39px;line-height:1.5;color:#F6F2E9">장 보고 요리해서 상까지 차려 주는 셰프</p>
-<p style="font-size:32px;font-weight:700;color:#BFC8D6">결과는</p>
-<p style="font-size:39px;line-height:1.5;color:#F6F2E9">실제로 작동하는 앱·파일 → 나는 확인하고 요청</p>
+<p style="font-size:24px;font-weight:700;color:#BFC8D6">비유하면</p>
+<p style="font-size:30px;line-height:1.5;color:#F6F2E9">장 보고 요리해서 상까지 차려 주는 셰프</p>
+<p style="font-size:24px;font-weight:700;color:#BFC8D6">결과는</p>
+<p style="font-size:30px;line-height:1.5;color:#F6F2E9">실제로 작동하는 앱·파일 → 나는 확인하고 요청</p>
 </div>
 </div>
-<p style="position:absolute;left:112px;bottom:44px;width:1696px;font-size:32px;color:#6B7280">개념 · 4–15분</p>
 <aside class="notes">바이브코딩이 가능해진 배경에는 ‘에이전트 AI’가 있습니다. 예전 챗봇은 코드를 알려 주면 그걸 복사해서 실행하고 오류를 고치는 일이 모두 사람 몫이었습니다. 에이전트는 목표를 받으면 스스로 계획을 세우고, 코드를 실행하는 도구를 직접 사용하고, 결과를 확인해 고치는 과정까지 이어서 합니다. 같은 서비스(예: Claude, ChatGPT, Gemini) 안에서도 이런 에이전트 기능이 점점 많아지고 있습니다.</aside>
 </section>
-<section id="loop" style="background:#F6F2E9;color:#1F2937;font-family:'Noto Sans KR', Arial, sans-serif;padding:84px 112px 130px;display:flex;flex-direction:column;gap:48px">
+<section id="loop" style="background:#F6F2E9;color:#1F2937;font-family:'Noto Sans KR', Arial, sans-serif;padding:116px 128px 100px;display:flex;flex-direction:column;gap:48px">
 <div style="display:flex;flex-direction:column;gap:12px">
-<p style="font-size:32px;font-weight:700;color:#B4501E">2 · 에이전트 AI</p>
+<p style="font-size:30px;font-weight:700;color:#B4501E">2 · 에이전트 AI</p>
 <h2 style="font-family:'Noto Sans KR', Arial, sans-serif;font-size:84px;font-weight:900;line-height:1.15;color:#1B2A41">에이전트는 이렇게 일합니다</h2>
 </div>
 <div style="display:flex;flex-direction:row;gap:12px;align-items:stretch">
 <div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFDF8;border:2px solid #DDD5C3;border-radius:20px;padding:32px 28px">
-<p style="font-size:30px;font-weight:700;color:#B4501E">①</p>
-<h3 style="font-size:43px;font-weight:700;color:#1B2A41">목표 받기</h3>
-<p style="font-size:30px;line-height:1.45;color:#4B5563">“발표자 뽑기 앱 만들어 줘”</p>
+<p style="font-size:24px;font-weight:700;color:#B4501E">①</p>
+<h3 style="font-size:36px;font-weight:700;color:#1B2A41">목표 받기</h3>
+<p style="font-size:24px;line-height:1.45;color:#4B5563">“발표자 뽑기 앱 만들어 줘”</p>
 </div>
 <svg viewBox="0 0 40 24" aria-hidden="true" style="width:40px;height:24px;flex:none;align-self:center;"><polygon points="0,7.199999999999999 24.0,7.199999999999999 24.0,0 40.0,12.0 24.0,24.0 24.0,16.799999999999997 0,16.799999999999997" fill="#B4501E"/></svg>
 <div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFDF8;border:2px solid #DDD5C3;border-radius:20px;padding:32px 28px">
-<p style="font-size:30px;font-weight:700;color:#B4501E">②</p>
-<h3 style="font-size:43px;font-weight:700;color:#1B2A41">계획 세우기</h3>
-<p style="font-size:30px;line-height:1.45;color:#4B5563">화면, 기능, 저장 방법 정하기</p>
+<p style="font-size:24px;font-weight:700;color:#B4501E">②</p>
+<h3 style="font-size:36px;font-weight:700;color:#1B2A41">계획 세우기</h3>
+<p style="font-size:24px;line-height:1.45;color:#4B5563">화면, 기능, 저장 방법 정하기</p>
 </div>
 <svg viewBox="0 0 40 24" aria-hidden="true" style="width:40px;height:24px;flex:none;align-self:center;"><polygon points="0,7.199999999999999 24.0,7.199999999999999 24.0,0 40.0,12.0 24.0,24.0 24.0,16.799999999999997 0,16.799999999999997" fill="#B4501E"/></svg>
 <div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFDF8;border:2px solid #DDD5C3;border-radius:20px;padding:32px 28px">
-<p style="font-size:30px;font-weight:700;color:#B4501E">③</p>
-<h3 style="font-size:43px;font-weight:700;color:#1B2A41">실행하기</h3>
-<p style="font-size:30px;line-height:1.45;color:#4B5563">코드를 쓰고 파일을 만든다</p>
+<p style="font-size:24px;font-weight:700;color:#B4501E">③</p>
+<h3 style="font-size:36px;font-weight:700;color:#1B2A41">실행하기</h3>
+<p style="font-size:24px;line-height:1.45;color:#4B5563">코드를 쓰고 파일을 만든다</p>
 </div>
 <svg viewBox="0 0 40 24" aria-hidden="true" style="width:40px;height:24px;flex:none;align-self:center;"><polygon points="0,7.199999999999999 24.0,7.199999999999999 24.0,0 40.0,12.0 24.0,24.0 24.0,16.799999999999997 0,16.799999999999997" fill="#B4501E"/></svg>
 <div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFDF8;border:2px solid #DDD5C3;border-radius:20px;padding:32px 28px">
-<p style="font-size:30px;font-weight:700;color:#B4501E">④</p>
-<h3 style="font-size:43px;font-weight:700;color:#1B2A41">확인하기</h3>
-<p style="font-size:30px;line-height:1.45;color:#4B5563">직접 실행해 보고 오류를 찾는다</p>
+<p style="font-size:24px;font-weight:700;color:#B4501E">④</p>
+<h3 style="font-size:36px;font-weight:700;color:#1B2A41">확인하기</h3>
+<p style="font-size:24px;line-height:1.45;color:#4B5563">직접 실행해 보고 오류를 찾는다</p>
 </div>
 <svg viewBox="0 0 40 24" aria-hidden="true" style="width:40px;height:24px;flex:none;align-self:center;"><polygon points="0,7.199999999999999 24.0,7.199999999999999 24.0,0 40.0,12.0 24.0,24.0 24.0,16.799999999999997 0,16.799999999999997" fill="#B4501E"/></svg>
 <div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFDF8;border:2px solid #DDD5C3;border-radius:20px;padding:32px 28px">
-<p style="font-size:30px;font-weight:700;color:#B4501E">⑤</p>
-<h3 style="font-size:43px;font-weight:700;color:#1B2A41">고치기</h3>
-<p style="font-size:30px;line-height:1.45;color:#4B5563">문제를 고치고 다시 ④로</p>
+<p style="font-size:24px;font-weight:700;color:#B4501E">⑤</p>
+<h3 style="font-size:36px;font-weight:700;color:#1B2A41">고치기</h3>
+<p style="font-size:24px;line-height:1.45;color:#4B5563">문제를 고치고 다시 ④로</p>
 </div>
 </div>
 <div style="display:flex;flex-direction:row;gap:40px">
 <div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#1B2A41;border-radius:20px;padding:36px 44px">
-<p style="font-size:32px;font-weight:700;color:#F2A65A">교사가 맡는 일</p>
-<p style="font-size:38px;line-height:1.45;color:#F6F2E9">① 처음에 목표를 분명히 말하기, ④ 마지막에 수업에 맞는지 직접 확인하기</p>
+<p style="font-size:30px;font-weight:700;color:#F2A65A">교사가 맡는 일</p>
+<p style="font-size:32px;line-height:1.45;color:#F6F2E9">① 처음에 목표를 분명히 말하기, ④ 마지막에 수업에 맞는지 직접 확인하기</p>
 </div>
 <div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#EBE5D6;border-radius:20px;padding:36px 44px">
-<p style="font-size:32px;font-weight:700;color:#2B5E9E">AI가 맡는 일</p>
-<p style="font-size:38px;line-height:1.45;color:#1F2937">②~⑤를 스스로 이어서 하고, ④와 ⑤를 여러 번 반복하기</p>
+<p style="font-size:26px;font-weight:700;color:#2B5E9E">AI가 맡는 일</p>
+<p style="font-size:32px;line-height:1.45;color:#1F2937">②~⑤를 스스로 이어서 하고, ④와 ⑤를 여러 번 반복하기</p>
 </div>
 </div>
-<p style="position:absolute;left:112px;bottom:44px;width:1696px;font-size:30px;color:#6B7280">개념 · 4–15분</p>
 <aside class="notes">챗봇과 에이전트의 가장 큰 차이는 ④ 확인과 ⑤ 고치기를 AI가 스스로 반복한다는 점입니다. 그래서 사람은 처음과 끝, 즉 “무엇을 만들지”와 “제대로 됐는지”에 집중할 수 있습니다. 다만 AI의 확인이 완벽하지 않으므로, 마지막 확인은 반드시 교사가 직접 눌러 보며 해야 합니다.</aside>
 </section>
-<section id="tools" style="background:#F6F2E9;color:#1F2937;font-family:'Noto Sans KR', Arial, sans-serif;padding:84px 112px 130px;display:flex;flex-direction:column;gap:40px">
+<section id="tools" style="background:#F6F2E9;color:#1F2937;font-family:'Noto Sans KR', Arial, sans-serif;padding:116px 128px 100px;display:flex;flex-direction:column;gap:40px">
 <div style="display:flex;flex-direction:column;gap:12px">
-<p style="font-size:32px;font-weight:700;color:#B4501E">2 · 에이전트 AI</p>
+<p style="font-size:30px;font-weight:700;color:#B4501E">2 · 에이전트 AI</p>
 <h2 style="font-family:'Noto Sans KR', Arial, sans-serif;font-size:84px;font-weight:900;line-height:1.15;color:#1B2A41">어디에서 해 볼 수 있을까?</h2>
 </div>
-<table style="width:1696px;font-size:34px;color:#1F2937;font-family:'Noto Sans KR', Arial, sans-serif">
+<table style="width:1664px;font-size:28px;color:#1F2937;font-family:'Noto Sans KR', Arial, sans-serif">
 <tr style="background:#1B2A41"><th style="width:22%;color:#F6F2E9;padding:20px 28px">유형</th><th style="width:30%;color:#F6F2E9;padding:20px 28px">대표 예시</th><th style="width:32%;color:#F6F2E9;padding:20px 28px">특징</th><th style="width:16%;color:#F6F2E9;padding:20px 28px">오늘</th></tr>
 <tr style="background:#FCE9DC"><td style="padding:20px 28px"><b>채팅창 미리보기형</b></td><td style="padding:20px 28px">Claude 아티팩트, ChatGPT 캔버스, Gemini 캔버스</td><td style="padding:20px 28px">설치 없이 대화창에서 바로 실행. 한 화면짜리 앱에 알맞음</td><td style="padding:20px 28px"><b>실습에 사용</b></td></tr>
 <tr style="background:#FFFDF8"><td style="padding:20px 28px"><b>웹 앱 빌더형</b></td><td style="padding:20px 28px">Lovable, Replit 등</td><td style="padding:20px 28px">저장, 로그인, 배포까지 웹에서 한 번에</td><td style="padding:20px 28px">다음 단계</td></tr>
 <tr style="background:#F6F2E9"><td style="padding:20px 28px"><b>코딩 에이전트형</b></td><td style="padding:20px 28px">Claude Code, Cursor 등</td><td style="padding:20px 28px">여러 파일과 데이터베이스를 다루는 본격 개발</td><td style="padding:20px 28px">심화</td></tr>
 </table>
-<p style="font-size:32px;line-height:1.5;color:#4B5563">※ 서비스별 기능과 무료 사용 범위는 자주 바뀌므로, 연수 전에 사용할 서비스를 한 번 확인해 두세요.</p>
-<p style="position:absolute;left:112px;bottom:44px;width:1696px;font-size:30px;color:#6B7280">개념 · 4–15분</p>
+<p style="font-size:26px;line-height:1.5;color:#4B5563">※ 서비스별 기능과 무료 사용 범위는 자주 바뀌므로, 연수 전에 사용할 서비스를 한 번 확인해 두세요.</p>
 <aside class="notes">오늘 실습은 가장 쉬운 ‘채팅창 미리보기형’으로 합니다. 이미 쓰고 계신 AI 서비스 하나면 충분합니다. 여러 학급이 함께 쓰고 결과를 저장해야 하는 앱은 웹 앱 빌더나 코딩 에이전트로 넘어가게 되는데, 사례로 보여 드릴 두 앱이 그런 경우입니다. 처음부터 큰 도구를 쓰기보다 작은 앱부터 성공 경험을 쌓는 것을 권합니다.</aside>
 </section>
-<section id="case1" style="background:#EBE5D6;color:#1F2937;font-family:'Noto Sans KR', Arial, sans-serif;padding:84px 112px 130px;display:flex;flex-direction:column;gap:44px">
+<section id="case1" style="background:#EBE5D6;color:#1F2937;font-family:'Noto Sans KR', Arial, sans-serif;padding:116px 128px 100px;display:flex;flex-direction:column;gap:44px">
 <div style="display:flex;flex-direction:column;gap:12px">
-<p style="font-size:35px;font-weight:700;color:#B4501E">3 · 교사가 만든 앱 ① 역사 수업</p>
+<p style="font-size:30px;font-weight:700;color:#B4501E">3 · 교사가 만든 앱 ① 역사 수업</p>
 <h2 style="font-family:'Noto Sans KR', Arial, sans-serif;font-size:84px;font-weight:900;line-height:1.15;color:#1B2A41">조선시대 사람들과 대화하기</h2>
 </div>
 <div style="display:flex;flex-direction:row;gap:64px;align-items:start">
 <div style="flex:1;display:flex;flex-direction:column;gap:32px">
 <div style="display:flex;flex-direction:column;gap:8px">
-<h3 style="font-size:41px;font-weight:700;color:#2B5E9E">수업 장면</h3>
-<p style="font-size:37px;line-height:1.5;color:#1F2937">학생이 양반·중인·상민·천민의 남녀 가상 인물 8명 중 한 명을 골라 궁금한 것을 자유롭게 질문합니다.</p>
+<h3 style="font-size:32px;font-weight:700;color:#2B5E9E">수업 장면</h3>
+<p style="font-size:28px;line-height:1.5;color:#1F2937">학생이 양반·중인·상민·천민의 남녀 가상 인물 8명 중 한 명을 골라 궁금한 것을 자유롭게 질문합니다.</p>
 </div>
 <div style="display:flex;flex-direction:column;gap:8px">
-<h3 style="font-size:41px;font-weight:700;color:#2B5E9E">주요 기능</h3>
-<p style="font-size:37px;line-height:1.5;color:#1F2937">추천 질문과 직접 질문 · ‘나의 탐구 기록’에 대화한 인물과 발견한 정보 자동 정리 · 핵심 용어 정리</p>
+<h3 style="font-size:32px;font-weight:700;color:#2B5E9E">주요 기능</h3>
+<p style="font-size:28px;line-height:1.5;color:#1F2937">추천 질문과 직접 질문 · ‘나의 탐구 기록’에 대화한 인물과 발견한 정보 자동 정리 · 핵심 용어 정리</p>
 </div>
 <div style="display:flex;flex-direction:column;gap:8px">
-<h3 style="font-size:41px;font-weight:700;color:#2B5E9E">정확성을 지키는 장치</h3>
-<p style="font-size:37px;line-height:1.5;color:#1F2937">시대 배경(조선 중·후기)을 밝히고, 역사적 사실과 가상 설정을 구분하며, 우리역사넷·한국사데이터베이스 출처를 안내합니다.</p>
+<h3 style="font-size:32px;font-weight:700;color:#2B5E9E">정확성을 지키는 장치</h3>
+<p style="font-size:28px;line-height:1.5;color:#1F2937">시대 배경(조선 중·후기)을 밝히고, 역사적 사실과 가상 설정을 구분하며, 우리역사넷·한국사데이터베이스 출처를 안내합니다.</p>
 </div>
 </div>
 <div style="width:380px;display:flex;flex-direction:column;align-items:center;gap:20px;background:#FFFDF8;border-radius:20px;padding:40px">
 <svg aria-label="joseon-status-chat.vercel.app 접속 QR코드" width="33" height="33" viewBox="0 0 33 33" xmlns="http://www.w3.org/2000/svg" style="width:300px;height:300px"><rect width="33" height="33" fill="#FFFFFF"/><path d="M2 2h1v1h-1zM3 2h1v1h-1zM4 2h1v1h-1zM5 2h1v1h-1zM6 2h1v1h-1zM7 2h1v1h-1zM8 2h1v1h-1zM10 2h1v1h-1zM12 2h1v1h-1zM14 2h1v1h-1zM15 2h1v1h-1zM17 2h1v1h-1zM18 2h1v1h-1zM20 2h1v1h-1zM24 2h1v1h-1zM25 2h1v1h-1zM26 2h1v1h-1zM27 2h1v1h-1zM28 2h1v1h-1zM29 2h1v1h-1zM30 2h1v1h-1zM2 3h1v1h-1zM8 3h1v1h-1zM11 3h1v1h-1zM12 3h1v1h-1zM13 3h1v1h-1zM15 3h1v1h-1zM16 3h1v1h-1zM19 3h1v1h-1zM20 3h1v1h-1zM21 3h1v1h-1zM24 3h1v1h-1zM30 3h1v1h-1zM2 4h1v1h-1zM4 4h1v1h-1zM5 4h1v1h-1zM6 4h1v1h-1zM8 4h1v1h-1zM11 4h1v1h-1zM12 4h1v1h-1zM14 4h1v1h-1zM17 4h1v1h-1zM18 4h1v1h-1zM19 4h1v1h-1zM20 4h1v1h-1zM22 4h1v1h-1zM24 4h1v1h-1zM26 4h1v1h-1zM27 4h1v1h-1zM28 4h1v1h-1zM30 4h1v1h-1zM2 5h1v1h-1zM4 5h1v1h-1zM5 5h1v1h-1zM6 5h1v1h-1zM8 5h1v1h-1zM10 5h1v1h-1zM13 5h1v1h-1zM14 5h1v1h-1zM15 5h1v1h-1zM17 5h1v1h-1zM20 5h1v1h-1zM21 5h1v1h-1zM24 5h1v1h-1zM26 5h1v1h-1zM27 5h1v1h-1zM28 5h1v1h-1zM30 5h1v1h-1zM2 6h1v1h-1zM4 6h1v1h-1zM5 6h1v1h-1zM6 6h1v1h-1zM8 6h1v1h-1zM10 6h1v1h-1zM12 6h1v1h-1zM13 6h1v1h-1zM16 6h1v1h-1zM17 6h1v1h-1zM18 6h1v1h-1zM19 6h1v1h-1zM20 6h1v1h-1zM22 6h1v1h-1zM24 6h1v1h-1zM26 6h1v1h-1zM27 6h1v1h-1zM28 6h1v1h-1zM30 6h1v1h-1zM2 7h1v1h-1zM8 7h1v1h-1zM10 7h1v1h-1zM13 7h1v1h-1zM14 7h1v1h-1zM18 7h1v1h-1zM20 7h1v1h-1zM21 7h1v1h-1zM24 7h1v1h-1zM30 7h1v1h-1zM2 8h1v1h-1zM3 8h1v1h-1zM4 8h1v1h-1zM5 8h1v1h-1zM6 8h1v1h-1zM7 8h1v1h-1zM8 8h1v1h-1zM10 8h1v1h-1zM12 8h1v1h-1zM14 8h1v1h-1zM16 8h1v1h-1zM18 8h1v1h-1zM20 8h1v1h-1zM22 8h1v1h-1zM24 8h1v1h-1zM25 8h1v1h-1zM26 8h1v1h-1zM27 8h1v1h-1zM28 8h1v1h-1zM29 8h1v1h-1zM30 8h1v1h-1zM10 9h1v1h-1zM11 9h1v1h-1zM12 9h1v1h-1zM13 9h1v1h-1zM14 9h1v1h-1zM16 9h1v1h-1zM17 9h1v1h-1zM18 9h1v1h-1zM19 9h1v1h-1zM21 9h1v1h-1zM2 10h1v1h-1zM6 10h1v1h-1zM8 10h1v1h-1zM9 10h1v1h-1zM10 10h1v1h-1zM14 10h1v1h-1zM15 10h1v1h-1zM16 10h1v1h-1zM19 10h1v1h-1zM21 10h1v1h-1zM23 10h1v1h-1zM24 10h1v1h-1zM25 10h1v1h-1zM26 10h1v1h-1zM27 10h1v1h-1zM30 10h1v1h-1zM2 11h1v1h-1zM5 11h1v1h-1zM9 11h1v1h-1zM10 11h1v1h-1zM13 11h1v1h-1zM14 11h1v1h-1zM16 11h1v1h-1zM17 11h1v1h-1zM18 11h1v1h-1zM20 11h1v1h-1zM24 11h1v1h-1zM25 11h1v1h-1zM26 11h1v1h-1zM27 11h1v1h-1zM28 11h1v1h-1zM29 11h1v1h-1zM30 11h1v1h-1zM2 12h1v1h-1zM4 12h1v1h-1zM6 12h1v1h-1zM8 12h1v1h-1zM13 12h1v1h-1zM15 12h1v1h-1zM16 12h1v1h-1zM17 12h1v1h-1zM18 12h1v1h-1zM19 12h1v1h-1zM22 12h1v1h-1zM30 12h1v1h-1zM3 13h1v1h-1zM6 13h1v1h-1zM11 13h1v1h-1zM12 13h1v1h-1zM14 13h1v1h-1zM15 13h1v1h-1zM19 13h1v1h-1zM20 13h1v1h-1zM22 13h1v1h-1zM27 13h1v1h-1zM29 13h1v1h-1zM30 13h1v1h-1zM3 14h1v1h-1zM4 14h1v1h-1zM6 14h1v1h-1zM7 14h1v1h-1zM8 14h1v1h-1zM9 14h1v1h-1zM10 14h1v1h-1zM12 14h1v1h-1zM15 14h1v1h-1zM17 14h1v1h-1zM19 14h1v1h-1zM21 14h1v1h-1zM23 14h1v1h-1zM29 14h1v1h-1zM2 15h1v1h-1zM3 15h1v1h-1zM4 15h1v1h-1zM11 15h1v1h-1zM12 15h1v1h-1zM15 15h1v1h-1zM16 15h1v1h-1zM17 15h1v1h-1zM24 15h1v1h-1zM25 15h1v1h-1zM26 15h1v1h-1zM27 15h1v1h-1zM28 15h1v1h-1zM29 15h1v1h-1zM30 15h1v1h-1zM5 16h1v1h-1zM7 16h1v1h-1zM8 16h1v1h-1zM9 16h1v1h-1zM11 16h1v1h-1zM13 16h1v1h-1zM17 16h1v1h-1zM18 16h1v1h-1zM19 16h1v1h-1zM20 16h1v1h-1zM26 16h1v1h-1zM27 16h1v1h-1zM28 16h1v1h-1zM30 16h1v1h-1zM6 17h1v1h-1zM7 17h1v1h-1zM9 17h1v1h-1zM10 17h1v1h-1zM12 17h1v1h-1zM14 17h1v1h-1zM16 17h1v1h-1zM17 17h1v1h-1zM19 17h1v1h-1zM22 17h1v1h-1zM23 17h1v1h-1zM25 17h1v1h-1zM29 17h1v1h-1zM30 17h1v1h-1zM6 18h1v1h-1zM8 18h1v1h-1zM10 18h1v1h-1zM12 18h1v1h-1zM14 18h1v1h-1zM15 18h1v1h-1zM16 18h1v1h-1zM17 18h1v1h-1zM19 18h1v1h-1zM20 18h1v1h-1zM21 18h1v1h-1zM25 18h1v1h-1zM29 18h1v1h-1zM2 19h1v1h-1zM4 19h1v1h-1zM6 19h1v1h-1zM7 19h1v1h-1zM9 19h1v1h-1zM10 19h1v1h-1zM11 19h1v1h-1zM12 19h1v1h-1zM14 19h1v1h-1zM17 19h1v1h-1zM18 19h1v1h-1zM19 19h1v1h-1zM20 19h1v1h-1zM24 19h1v1h-1zM25 19h1v1h-1zM26 19h1v1h-1zM27 19h1v1h-1zM29 19h1v1h-1zM30 19h1v1h-1zM8 20h1v1h-1zM9 20h1v1h-1zM14 20h1v1h-1zM15 20h1v1h-1zM16 20h1v1h-1zM17 20h1v1h-1zM20 20h1v1h-1zM22 20h1v1h-1zM26 20h1v1h-1zM28 20h1v1h-1zM30 20h1v1h-1zM4 21h1v1h-1zM7 21h1v1h-1zM10 21h1v1h-1zM13 21h1v1h-1zM15 21h1v1h-1zM17 21h1v1h-1zM19 21h1v1h-1zM24 21h1v1h-1zM26 21h1v1h-1zM29 21h1v1h-1zM30 21h1v1h-1zM2 22h1v1h-1zM3 22h1v1h-1zM4 22h1v1h-1zM5 22h1v1h-1zM6 22h1v1h-1zM7 22h1v1h-1zM8 22h1v1h-1zM10 22h1v1h-1zM12 22h1v1h-1zM14 22h1v1h-1zM15 22h1v1h-1zM19 22h1v1h-1zM21 22h1v1h-1zM22 22h1v1h-1zM23 22h1v1h-1zM24 22h1v1h-1zM25 22h1v1h-1zM26 22h1v1h-1zM27 22h1v1h-1zM30 22h1v1h-1zM10 23h1v1h-1zM11 23h1v1h-1zM13 23h1v1h-1zM14 23h1v1h-1zM15 23h1v1h-1zM16 23h1v1h-1zM17 23h1v1h-1zM18 23h1v1h-1zM21 23h1v1h-1zM22 23h1v1h-1zM26 23h1v1h-1zM30 23h1v1h-1zM2 24h1v1h-1zM3 24h1v1h-1zM4 24h1v1h-1zM5 24h1v1h-1zM6 24h1v1h-1zM7 24h1v1h-1zM8 24h1v1h-1zM10 24h1v1h-1zM11 24h1v1h-1zM12 24h1v1h-1zM17 24h1v1h-1zM20 24h1v1h-1zM21 24h1v1h-1zM22 24h1v1h-1zM24 24h1v1h-1zM26 24h1v1h-1zM27 24h1v1h-1zM28 24h1v1h-1zM30 24h1v1h-1zM2 25h1v1h-1zM8 25h1v1h-1zM11 25h1v1h-1zM12 25h1v1h-1zM14 25h1v1h-1zM16 25h1v1h-1zM18 25h1v1h-1zM19 25h1v1h-1zM21 25h1v1h-1zM22 25h1v1h-1zM26 25h1v1h-1zM29 25h1v1h-1zM2 26h1v1h-1zM4 26h1v1h-1zM5 26h1v1h-1zM6 26h1v1h-1zM8 26h1v1h-1zM10 26h1v1h-1zM11 26h1v1h-1zM12 26h1v1h-1zM15 26h1v1h-1zM16 26h1v1h-1zM19 26h1v1h-1zM21 26h1v1h-1zM22 26h1v1h-1zM23 26h1v1h-1zM24 26h1v1h-1zM25 26h1v1h-1zM26 26h1v1h-1zM27 26h1v1h-1zM29 26h1v1h-1zM2 27h1v1h-1zM4 27h1v1h-1zM5 27h1v1h-1zM6 27h1v1h-1zM8 27h1v1h-1zM11 27h1v1h-1zM12 27h1v1h-1zM13 27h1v1h-1zM14 27h1v1h-1zM15 27h1v1h-1zM17 27h1v1h-1zM18 27h1v1h-1zM20 27h1v1h-1zM21 27h1v1h-1zM22 27h1v1h-1zM23 27h1v1h-1zM30 27h1v1h-1zM2 28h1v1h-1zM4 28h1v1h-1zM5 28h1v1h-1zM6 28h1v1h-1zM8 28h1v1h-1zM11 28h1v1h-1zM12 28h1v1h-1zM13 28h1v1h-1zM15 28h1v1h-1zM17 28h1v1h-1zM18 28h1v1h-1zM19 28h1v1h-1zM20 28h1v1h-1zM21 28h1v1h-1zM27 28h1v1h-1zM28 28h1v1h-1zM29 28h1v1h-1zM30 28h1v1h-1zM2 29h1v1h-1zM8 29h1v1h-1zM11 29h1v1h-1zM13 29h1v1h-1zM14 29h1v1h-1zM18 29h1v1h-1zM19 29h1v1h-1zM20 29h1v1h-1zM21 29h1v1h-1zM22 29h1v1h-1zM23 29h1v1h-1zM24 29h1v1h-1zM25 29h1v1h-1zM26 29h1v1h-1zM27 29h1v1h-1zM29 29h1v1h-1zM30 29h1v1h-1zM2 30h1v1h-1zM3 30h1v1h-1zM4 30h1v1h-1zM5 30h1v1h-1zM6 30h1v1h-1zM7 30h1v1h-1zM8 30h1v1h-1zM10 30h1v1h-1zM11 30h1v1h-1zM12 30h1v1h-1zM13 30h1v1h-1zM14 30h1v1h-1zM18 30h1v1h-1zM19 30h1v1h-1zM22 30h1v1h-1zM23 30h1v1h-1zM24 30h1v1h-1zM27 30h1v1h-1zM29 30h1v1h-1z" fill="#1F2937"/></svg>
-<p style="font-size:32px;line-height:1.4;text-align:center;color:#2B5E9E"><a href="https://joseon-status-chat.vercel.app/">joseon-status-chat<br>.vercel.app</a></p>
+<p style="font-size:24px;line-height:1.4;text-align:center;color:#2B5E9E"><a href="https://joseon-status-chat.vercel.app/">joseon-status-chat<br>.vercel.app</a></p>
 </div>
 </div>
-<p style="position:absolute;left:112px;bottom:44px;width:1696px;font-size:32px;color:#6B7280">사례 · 15–22분</p>
 <aside class="notes">강사가 화면으로 인물 한 명에게 질문하는 모습을 먼저 보여 주고(약 2분), 관심 있는 선생님은 QR코드로 직접 접속해 질문을 하나씩 해 보시게 합니다. 실습 시간을 지키기 위해 사례 한 개에 3분을 넘기지 않습니다. 이 앱은 단순히 ‘AI와 대화’하는 것이 아니라, 학생이 신분과 성별에 따라 삶이 어떻게 달랐는지 비교하며 탐구 기록을 남기도록 설계했습니다. 특히 AI가 역사 내용을 지어낼 위험을 줄이기 위해 시대 배경을 밝히고, 사실과 가상 설정을 구분하고, 출처를 안내하는 장치를 넣었다는 점을 강조해 주세요. 만들면서 겪은 어려움과 고친 과정을 직접 이야기하면 가장 설득력 있습니다.</aside>
 </section>
-<section id="case2" style="background:#EBE5D6;color:#1F2937;font-family:'Noto Sans KR', Arial, sans-serif;padding:84px 112px 130px;display:flex;flex-direction:column;gap:44px">
+<section id="case2" style="background:#EBE5D6;color:#1F2937;font-family:'Noto Sans KR', Arial, sans-serif;padding:116px 128px 100px;display:flex;flex-direction:column;gap:44px">
 <div style="display:flex;flex-direction:column;gap:12px">
-<p style="font-size:37px;font-weight:700;color:#B4501E">3 · 교사가 만든 앱 ② 학급 경영</p>
+<p style="font-size:30px;font-weight:700;color:#B4501E">3 · 교사가 만든 앱 ② 학급 경영</p>
 <h2 style="font-family:'Noto Sans KR', Arial, sans-serif;font-size:84px;font-weight:900;line-height:1.15;color:#1B2A41">학급 BOARD — 우리 반 정보를 한 화면에</h2>
 </div>
 <div style="display:flex;flex-direction:row;gap:64px;align-items:start">
 <div style="flex:1;display:flex;flex-direction:column;gap:32px">
 <div style="display:flex;flex-direction:column;gap:8px">
-<h3 style="font-size:44px;font-weight:700;color:#2B5E9E">해결한 불편</h3>
-<p style="font-size:39px;line-height:1.5;color:#1F2937">공지, 수행평가, 시간표 변경, 급식 정보가 여러 곳에 흩어져 있었습니다.</p>
+<h3 style="font-size:32px;font-weight:700;color:#2B5E9E">해결한 불편</h3>
+<p style="font-size:28px;line-height:1.5;color:#1F2937">공지, 수행평가, 시간표 변경, 급식 정보가 여러 곳에 흩어져 있었습니다.</p>
 </div>
 <div style="display:flex;flex-direction:column;gap:8px">
-<h3 style="font-size:44px;font-weight:700;color:#2B5E9E">학생 화면</h3>
-<p style="font-size:39px;line-height:1.5;color:#1F2937">오늘 할 일·시간표·급식·달력을 한눈에 · 바뀐 교시는 색으로 표시 · 공지와 수행평가를 학생이 직접 등록(작성자는 번호로) · 게시판(글·투표·그림)과 사진첩</p>
+<h3 style="font-size:32px;font-weight:700;color:#2B5E9E">학생 화면</h3>
+<p style="font-size:28px;line-height:1.5;color:#1F2937">오늘 할 일·시간표·급식·달력을 한눈에 · 바뀐 교시는 색으로 표시 · 공지와 수행평가를 학생이 직접 등록(작성자는 번호로) · 게시판(글·투표·그림)과 사진첩</p>
 </div>
 <div style="display:flex;flex-direction:column;gap:8px">
-<h3 style="font-size:44px;font-weight:700;color:#2B5E9E">교사 화면</h3>
-<p style="font-size:39px;line-height:1.5;color:#1F2937">별도의 관리자 화면에서 등록된 내용을 관리합니다.</p>
+<h3 style="font-size:32px;font-weight:700;color:#2B5E9E">교사 화면</h3>
+<p style="font-size:28px;line-height:1.5;color:#1F2937">별도의 관리자 화면에서 등록된 내용을 관리합니다.</p>
 </div>
 </div>
 <div style="width:380px;display:flex;flex-direction:column;align-items:center;gap:20px;background:#FFFDF8;border-radius:20px;padding:40px">
 <svg aria-label="board-cc34a.web.app 접속 QR코드" width="33" height="33" viewBox="0 0 33 33" xmlns="http://www.w3.org/2000/svg" style="width:300px;height:300px"><rect width="33" height="33" fill="#FFFFFF"/><path d="M2 2h1v1h-1zM3 2h1v1h-1zM4 2h1v1h-1zM5 2h1v1h-1zM6 2h1v1h-1zM7 2h1v1h-1zM8 2h1v1h-1zM10 2h1v1h-1zM11 2h1v1h-1zM14 2h1v1h-1zM15 2h1v1h-1zM18 2h1v1h-1zM20 2h1v1h-1zM21 2h1v1h-1zM22 2h1v1h-1zM24 2h1v1h-1zM25 2h1v1h-1zM26 2h1v1h-1zM27 2h1v1h-1zM28 2h1v1h-1zM29 2h1v1h-1zM30 2h1v1h-1zM2 3h1v1h-1zM8 3h1v1h-1zM10 3h1v1h-1zM12 3h1v1h-1zM14 3h1v1h-1zM24 3h1v1h-1zM30 3h1v1h-1zM2 4h1v1h-1zM4 4h1v1h-1zM5 4h1v1h-1zM6 4h1v1h-1zM8 4h1v1h-1zM11 4h1v1h-1zM12 4h1v1h-1zM14 4h1v1h-1zM15 4h1v1h-1zM16 4h1v1h-1zM21 4h1v1h-1zM22 4h1v1h-1zM24 4h1v1h-1zM26 4h1v1h-1zM27 4h1v1h-1zM28 4h1v1h-1zM30 4h1v1h-1zM2 5h1v1h-1zM4 5h1v1h-1zM5 5h1v1h-1zM6 5h1v1h-1zM8 5h1v1h-1zM10 5h1v1h-1zM11 5h1v1h-1zM14 5h1v1h-1zM15 5h1v1h-1zM16 5h1v1h-1zM17 5h1v1h-1zM18 5h1v1h-1zM19 5h1v1h-1zM20 5h1v1h-1zM24 5h1v1h-1zM26 5h1v1h-1zM27 5h1v1h-1zM28 5h1v1h-1zM30 5h1v1h-1zM2 6h1v1h-1zM4 6h1v1h-1zM5 6h1v1h-1zM6 6h1v1h-1zM8 6h1v1h-1zM12 6h1v1h-1zM13 6h1v1h-1zM15 6h1v1h-1zM16 6h1v1h-1zM17 6h1v1h-1zM18 6h1v1h-1zM21 6h1v1h-1zM24 6h1v1h-1zM26 6h1v1h-1zM27 6h1v1h-1zM28 6h1v1h-1zM30 6h1v1h-1zM2 7h1v1h-1zM8 7h1v1h-1zM12 7h1v1h-1zM15 7h1v1h-1zM16 7h1v1h-1zM18 7h1v1h-1zM19 7h1v1h-1zM20 7h1v1h-1zM21 7h1v1h-1zM22 7h1v1h-1zM24 7h1v1h-1zM30 7h1v1h-1zM2 8h1v1h-1zM3 8h1v1h-1zM4 8h1v1h-1zM5 8h1v1h-1zM6 8h1v1h-1zM7 8h1v1h-1zM8 8h1v1h-1zM10 8h1v1h-1zM12 8h1v1h-1zM14 8h1v1h-1zM16 8h1v1h-1zM18 8h1v1h-1zM20 8h1v1h-1zM22 8h1v1h-1zM24 8h1v1h-1zM25 8h1v1h-1zM26 8h1v1h-1zM27 8h1v1h-1zM28 8h1v1h-1zM29 8h1v1h-1zM30 8h1v1h-1zM10 9h1v1h-1zM11 9h1v1h-1zM12 9h1v1h-1zM13 9h1v1h-1zM14 9h1v1h-1zM16 9h1v1h-1zM19 9h1v1h-1zM21 9h1v1h-1zM2 10h1v1h-1zM4 10h1v1h-1zM5 10h1v1h-1zM7 10h1v1h-1zM8 10h1v1h-1zM9 10h1v1h-1zM11 10h1v1h-1zM15 10h1v1h-1zM17 10h1v1h-1zM18 10h1v1h-1zM19 10h1v1h-1zM20 10h1v1h-1zM21 10h1v1h-1zM22 10h1v1h-1zM24 10h1v1h-1zM27 10h1v1h-1zM29 10h1v1h-1zM30 10h1v1h-1zM2 11h1v1h-1zM3 11h1v1h-1zM4 11h1v1h-1zM5 11h1v1h-1zM7 11h1v1h-1zM11 11h1v1h-1zM15 11h1v1h-1zM18 11h1v1h-1zM20 11h1v1h-1zM21 11h1v1h-1zM22 11h1v1h-1zM23 11h1v1h-1zM24 11h1v1h-1zM25 11h1v1h-1zM26 11h1v1h-1zM30 11h1v1h-1zM2 12h1v1h-1zM5 12h1v1h-1zM8 12h1v1h-1zM9 12h1v1h-1zM10 12h1v1h-1zM13 12h1v1h-1zM14 12h1v1h-1zM15 12h1v1h-1zM19 12h1v1h-1zM22 12h1v1h-1zM23 12h1v1h-1zM25 12h1v1h-1zM26 12h1v1h-1zM28 12h1v1h-1zM29 12h1v1h-1zM3 13h1v1h-1zM4 13h1v1h-1zM7 13h1v1h-1zM9 13h1v1h-1zM11 13h1v1h-1zM13 13h1v1h-1zM14 13h1v1h-1zM17 13h1v1h-1zM20 13h1v1h-1zM22 13h1v1h-1zM24 13h1v1h-1zM30 13h1v1h-1zM4 14h1v1h-1zM6 14h1v1h-1zM7 14h1v1h-1zM8 14h1v1h-1zM9 14h1v1h-1zM12 14h1v1h-1zM16 14h1v1h-1zM19 14h1v1h-1zM21 14h1v1h-1zM23 14h1v1h-1zM25 14h1v1h-1zM27 14h1v1h-1zM28 14h1v1h-1zM3 15h1v1h-1zM7 15h1v1h-1zM10 15h1v1h-1zM12 15h1v1h-1zM14 15h1v1h-1zM16 15h1v1h-1zM17 15h1v1h-1zM19 15h1v1h-1zM20 15h1v1h-1zM21 15h1v1h-1zM22 15h1v1h-1zM24 15h1v1h-1zM28 15h1v1h-1zM29 15h1v1h-1zM30 15h1v1h-1zM2 16h1v1h-1zM5 16h1v1h-1zM6 16h1v1h-1zM8 16h1v1h-1zM10 16h1v1h-1zM12 16h1v1h-1zM14 16h1v1h-1zM15 16h1v1h-1zM18 16h1v1h-1zM21 16h1v1h-1zM22 16h1v1h-1zM23 16h1v1h-1zM25 16h1v1h-1zM28 16h1v1h-1zM29 16h1v1h-1zM30 16h1v1h-1zM3 17h1v1h-1zM5 17h1v1h-1zM7 17h1v1h-1zM9 17h1v1h-1zM10 17h1v1h-1zM12 17h1v1h-1zM13 17h1v1h-1zM16 17h1v1h-1zM17 17h1v1h-1zM20 17h1v1h-1zM26 17h1v1h-1zM29 17h1v1h-1zM3 18h1v1h-1zM4 18h1v1h-1zM6 18h1v1h-1zM7 18h1v1h-1zM8 18h1v1h-1zM11 18h1v1h-1zM13 18h1v1h-1zM16 18h1v1h-1zM17 18h1v1h-1zM18 18h1v1h-1zM20 18h1v1h-1zM22 18h1v1h-1zM23 18h1v1h-1zM25 18h1v1h-1zM26 18h1v1h-1zM27 18h1v1h-1zM29 18h1v1h-1zM3 19h1v1h-1zM5 19h1v1h-1zM7 19h1v1h-1zM9 19h1v1h-1zM10 19h1v1h-1zM11 19h1v1h-1zM12 19h1v1h-1zM16 19h1v1h-1zM17 19h1v1h-1zM20 19h1v1h-1zM22 19h1v1h-1zM25 19h1v1h-1zM27 19h1v1h-1zM28 19h1v1h-1zM29 19h1v1h-1zM2 20h1v1h-1zM4 20h1v1h-1zM6 20h1v1h-1zM7 20h1v1h-1zM8 20h1v1h-1zM9 20h1v1h-1zM11 20h1v1h-1zM12 20h1v1h-1zM14 20h1v1h-1zM15 20h1v1h-1zM16 20h1v1h-1zM17 20h1v1h-1zM18 20h1v1h-1zM20 20h1v1h-1zM23 20h1v1h-1zM25 20h1v1h-1zM28 20h1v1h-1zM5 21h1v1h-1zM7 21h1v1h-1zM9 21h1v1h-1zM11 21h1v1h-1zM15 21h1v1h-1zM16 21h1v1h-1zM18 21h1v1h-1zM19 21h1v1h-1zM23 21h1v1h-1zM24 21h1v1h-1zM26 21h1v1h-1zM28 21h1v1h-1zM3 22h1v1h-1zM5 22h1v1h-1zM8 22h1v1h-1zM10 22h1v1h-1zM12 22h1v1h-1zM15 22h1v1h-1zM16 22h1v1h-1zM18 22h1v1h-1zM19 22h1v1h-1zM21 22h1v1h-1zM22 22h1v1h-1zM23 22h1v1h-1zM24 22h1v1h-1zM25 22h1v1h-1zM26 22h1v1h-1zM27 22h1v1h-1zM28 22h1v1h-1zM10 23h1v1h-1zM11 23h1v1h-1zM12 23h1v1h-1zM14 23h1v1h-1zM18 23h1v1h-1zM19 23h1v1h-1zM20 23h1v1h-1zM21 23h1v1h-1zM22 23h1v1h-1zM26 23h1v1h-1zM27 23h1v1h-1zM28 23h1v1h-1zM29 23h1v1h-1zM30 23h1v1h-1zM2 24h1v1h-1zM3 24h1v1h-1zM4 24h1v1h-1zM5 24h1v1h-1zM6 24h1v1h-1zM7 24h1v1h-1zM8 24h1v1h-1zM10 24h1v1h-1zM11 24h1v1h-1zM13 24h1v1h-1zM14 24h1v1h-1zM16 24h1v1h-1zM20 24h1v1h-1zM21 24h1v1h-1zM22 24h1v1h-1zM24 24h1v1h-1zM26 24h1v1h-1zM27 24h1v1h-1zM29 24h1v1h-1zM2 25h1v1h-1zM8 25h1v1h-1zM10 25h1v1h-1zM13 25h1v1h-1zM14 25h1v1h-1zM15 25h1v1h-1zM16 25h1v1h-1zM20 25h1v1h-1zM21 25h1v1h-1zM22 25h1v1h-1zM26 25h1v1h-1zM27 25h1v1h-1zM2 26h1v1h-1zM4 26h1v1h-1zM5 26h1v1h-1zM6 26h1v1h-1zM8 26h1v1h-1zM12 26h1v1h-1zM13 26h1v1h-1zM14 26h1v1h-1zM17 26h1v1h-1zM19 26h1v1h-1zM22 26h1v1h-1zM23 26h1v1h-1zM24 26h1v1h-1zM25 26h1v1h-1zM26 26h1v1h-1zM28 26h1v1h-1zM2 27h1v1h-1zM4 27h1v1h-1zM5 27h1v1h-1zM6 27h1v1h-1zM8 27h1v1h-1zM10 27h1v1h-1zM11 27h1v1h-1zM13 27h1v1h-1zM17 27h1v1h-1zM18 27h1v1h-1zM21 27h1v1h-1zM23 27h1v1h-1zM25 27h1v1h-1zM26 27h1v1h-1zM27 27h1v1h-1zM30 27h1v1h-1zM2 28h1v1h-1zM4 28h1v1h-1zM5 28h1v1h-1zM6 28h1v1h-1zM8 28h1v1h-1zM10 28h1v1h-1zM11 28h1v1h-1zM12 28h1v1h-1zM14 28h1v1h-1zM15 28h1v1h-1zM16 28h1v1h-1zM18 28h1v1h-1zM21 28h1v1h-1zM25 28h1v1h-1zM28 28h1v1h-1zM30 28h1v1h-1zM2 29h1v1h-1zM8 29h1v1h-1zM11 29h1v1h-1zM13 29h1v1h-1zM14 29h1v1h-1zM15 29h1v1h-1zM16 29h1v1h-1zM18 29h1v1h-1zM21 29h1v1h-1zM22 29h1v1h-1zM23 29h1v1h-1zM27 29h1v1h-1zM29 29h1v1h-1zM2 30h1v1h-1zM3 30h1v1h-1zM4 30h1v1h-1zM5 30h1v1h-1zM6 30h1v1h-1zM7 30h1v1h-1zM8 30h1v1h-1zM10 30h1v1h-1zM11 30h1v1h-1zM14 30h1v1h-1zM15 30h1v1h-1zM17 30h1v1h-1zM20 30h1v1h-1zM22 30h1v1h-1zM23 30h1v1h-1zM24 30h1v1h-1zM25 30h1v1h-1zM29 30h1v1h-1z" fill="#1F2937"/></svg>
-<p style="font-size:34px;line-height:1.4;text-align:center;color:#2B5E9E"><a href="https://board-cc34a.web.app/index.html">board-cc34a<br>.web.app</a></p>
+<p style="font-size:24px;line-height:1.4;text-align:center;color:#2B5E9E"><a href="https://board-cc34a.web.app/index.html">board-cc34a<br>.web.app</a></p>
 </div>
 </div>
-<p style="position:absolute;left:112px;bottom:44px;width:1696px;font-size:34px;color:#6B7280">사례 · 15–22분</p>
 <aside class="notes">수업용이 아닌 학급 경영과 업무에도 바이브코딩을 쓸 수 있다는 예시입니다. 학생들이 공지와 수행평가를 직접 등록하고, 작성자는 이름 대신 번호로 남기도록 해 개인정보를 최소화했습니다. 이 앱처럼 여러 사람이 함께 쓰고 내용이 저장되는 앱은 오늘 실습보다 한 단계 위로, 데이터 저장 서비스(데이터베이스)를 연결해 만듭니다. 실제 운영하며 학생 반응이 어땠는지, 처음 버전에서 무엇을 고쳤는지 이야기해 주세요.</aside>
 </section>
-<section id="lessons" style="background:#F6F2E9;color:#1F2937;font-family:'Noto Sans KR', Arial, sans-serif;padding:84px 112px 130px;display:flex;flex-direction:column;gap:48px">
+<section id="lessons" style="background:#F6F2E9;color:#1F2937;font-family:'Noto Sans KR', Arial, sans-serif;padding:116px 128px 100px;display:flex;flex-direction:column;gap:48px">
 <div style="display:flex;flex-direction:column;gap:12px">
-<p style="font-size:32px;font-weight:700;color:#B4501E">3 · 사례에서 배우기</p>
+<p style="font-size:30px;font-weight:700;color:#B4501E">3 · 사례에서 배우기</p>
 <h2 style="font-family:'Noto Sans KR', Arial, sans-serif;font-size:84px;font-weight:900;line-height:1.15;color:#1B2A41">두 앱에서 배우는 세 가지</h2>
 </div>
 <div style="display:flex;flex-direction:row;gap:40px">
 <div style="flex:1;display:flex;flex-direction:column;gap:16px;background:#FFFDF8;border:2px solid #DDD5C3;border-radius:20px;padding:44px">
-<p style="font-size:96px;font-weight:900;line-height:1;color:#B4501E">1</p>
-<h3 style="font-size:48px;font-weight:700;line-height:1.3;color:#1B2A41">작은 불편에서 시작한다</h3>
-<p style="font-size:34px;line-height:1.55;color:#4B5563">“이런 게 있으면 좋겠다”는 한 문장이 출발점입니다.</p>
+<p style="font-size:80px;font-weight:900;line-height:1;color:#B4501E">1</p>
+<h3 style="font-size:40px;font-weight:700;line-height:1.3;color:#1B2A41">작은 불편에서 시작한다</h3>
+<p style="font-size:28px;line-height:1.55;color:#4B5563">“이런 게 있으면 좋겠다”는 한 문장이 출발점입니다.</p>
 </div>
 <div style="flex:1;display:flex;flex-direction:column;gap:16px;background:#FFFDF8;border:2px solid #DDD5C3;border-radius:20px;padding:44px">
-<p style="font-size:96px;font-weight:900;line-height:1;color:#B4501E">2</p>
-<h3 style="font-size:48px;font-weight:700;line-height:1.3;color:#1B2A41">한 번에 완성하지 않는다</h3>
-<p style="font-size:34px;line-height:1.55;color:#4B5563">써 보고, 불편한 점을 말하고, 고치기를 반복하며 자랍니다.</p>
+<p style="font-size:80px;font-weight:900;line-height:1;color:#B4501E">2</p>
+<h3 style="font-size:40px;font-weight:700;line-height:1.3;color:#1B2A41">한 번에 완성하지 않는다</h3>
+<p style="font-size:28px;line-height:1.55;color:#4B5563">써 보고, 불편한 점을 말하고, 고치기를 반복하며 자랍니다.</p>
 </div>
 <div style="flex:1;display:flex;flex-direction:column;gap:16px;background:#FFFDF8;border:2px solid #DDD5C3;border-radius:20px;padding:44px">
-<p style="font-size:96px;font-weight:900;line-height:1;color:#B4501E">3</p>
-<h3 style="font-size:48px;font-weight:700;line-height:1.3;color:#1B2A41">내용의 책임은 교사에게</h3>
-<p style="font-size:32px;line-height:1.5;color:#4B5563"><b style="color:#2B5E9E">수업용 앱</b><br>AI가 답할 근거 자료(출처)를 정확히 정해 줍니다.</p>
-<p style="font-size:32px;line-height:1.5;color:#4B5563"><b style="color:#2B5E9E">학급용 앱</b><br>이름·연락처 등 개인정보는 넣지 않고 번호를 씁니다.</p>
+<p style="font-size:80px;font-weight:900;line-height:1;color:#B4501E">3</p>
+<h3 style="font-size:40px;font-weight:700;line-height:1.3;color:#1B2A41">내용의 책임은 교사에게</h3>
+<p style="font-size:26px;line-height:1.5;color:#4B5563"><b style="color:#2B5E9E">수업용 앱</b><br>AI가 답할 근거 자료(출처)를 정확히 정해 줍니다.</p>
+<p style="font-size:26px;line-height:1.5;color:#4B5563"><b style="color:#2B5E9E">학급용 앱</b><br>이름·연락처 등 개인정보는 넣지 않고 번호를 씁니다.</p>
 </div>
 </div>
-<p style="position:absolute;left:112px;bottom:44px;width:1696px;font-size:30px;color:#6B7280">사례 · 15–22분</p>
 <aside class="notes">사례 소개를 마무리하며 세 가지를 짚습니다. 특히 3번이 중요합니다. 앱의 종류에 따라 교사가 지켜야 할 기준이 다릅니다. 수업용 앱(조선시대 사람들과 대화하기)은 AI가 무엇을 근거로 답할지 출처를 정확히 지정해야 합니다. 이 앱은 우리역사넷·한국사데이터베이스를 근거로 삼고, 역사적 사실과 가상 설정을 구분해 보여 줍니다. 학급용 앱(학급 BOARD)은 학생 개인정보를 처음부터 받지 않도록 설계해야 합니다. 이 앱은 작성자를 이름 대신 번호로 남깁니다. 이 세 가지를 기억하고 이제 직접 만들어 보자고 실습으로 넘어갑니다.</aside>
 </section>
-<section id="practice" data-transition="fade" style="background:#1B2A41;color:#F6F2E9;font-family:'Noto Sans KR', Arial, sans-serif;padding:84px 112px 130px;display:flex;flex-direction:column;gap:48px">
+<section id="practice" data-transition="fade" style="background:#1B2A41;color:#F6F2E9;font-family:'Noto Sans KR', Arial, sans-serif;padding:116px 128px 100px;display:flex;flex-direction:column;gap:48px">
 <div style="display:flex;flex-direction:column;gap:12px">
-<p style="font-size:32px;font-weight:700;color:#F2A65A">4 · 실습 · 22–53분 (안내 6분 + 직접 만들기 25분)</p>
+<p style="font-size:30px;font-weight:700;color:#F2A65A">4 · 실습 · 22–53분 (안내 6분 + 직접 만들기 25분)</p>
 <h2 style="font-family:'Noto Sans KR', Arial, sans-serif;font-size:84px;font-weight:900;line-height:1.15;color:#F6F2E9">25분 동안, 나만의 앱 하나 만들기</h2>
 </div>
 <div style="display:flex;flex-direction:row;gap:40px">
 <div style="flex:1;display:flex;flex-direction:column;gap:16px;background:#24364F;border-radius:20px;padding:44px">
-<p style="font-size:32px;font-weight:700;color:#F2A65A">STEP 1 · 10분</p>
-<h3 style="font-size:56px;font-weight:700;color:#F6F2E9">만들기</h3>
-<p style="font-size:34px;line-height:1.55;color:#DCE3EC">실습 메뉴에서 하나를 고르고, 빈칸 프롬프트를 채워 AI에게 보냅니다.</p>
+<p style="font-size:30px;font-weight:700;color:#F2A65A">STEP 1 · 10분</p>
+<h3 style="font-size:48px;font-weight:700;color:#F6F2E9">만들기</h3>
+<p style="font-size:28px;line-height:1.55;color:#DCE3EC">실습 메뉴에서 하나를 고르고, 빈칸 프롬프트를 채워 AI에게 보냅니다.</p>
 </div>
 <div style="flex:1;display:flex;flex-direction:column;gap:16px;background:#24364F;border-radius:20px;padding:44px">
-<p style="font-size:32px;font-weight:700;color:#F2A65A">STEP 2 · 10분</p>
-<h3 style="font-size:56px;font-weight:700;color:#F6F2E9">고치기</h3>
-<p style="font-size:34px;line-height:1.55;color:#DCE3EC">직접 눌러 보고 “이렇게 바꿔 줘”를 2~3번 요청합니다.</p>
+<p style="font-size:30px;font-weight:700;color:#F2A65A">STEP 2 · 10분</p>
+<h3 style="font-size:48px;font-weight:700;color:#F6F2E9">고치기</h3>
+<p style="font-size:28px;line-height:1.55;color:#DCE3EC">직접 눌러 보고 “이렇게 바꿔 줘”를 2~3번 요청합니다.</p>
 </div>
 <div style="flex:1;display:flex;flex-direction:column;gap:16px;background:#24364F;border-radius:20px;padding:44px">
-<p style="font-size:32px;font-weight:700;color:#F2A65A">STEP 3 · 5분</p>
-<h3 style="font-size:56px;font-weight:700;color:#F6F2E9">나누기</h3>
-<p style="font-size:34px;line-height:1.55;color:#DCE3EC">옆 선생님과 화면을 바꿔 써 보고, 좋은 점 하나를 말해 줍니다.</p>
+<p style="font-size:30px;font-weight:700;color:#F2A65A">STEP 3 · 5분</p>
+<h3 style="font-size:48px;font-weight:700;color:#F6F2E9">나누기</h3>
+<p style="font-size:28px;line-height:1.55;color:#DCE3EC">옆 선생님과 화면을 바꿔 써 보고, 좋은 점 하나를 말해 줍니다.</p>
 </div>
 </div>
 <div style="flex:1"></div>
-<p style="font-size:36px;line-height:1.5;color:#DCE3EC"><b>준비물</b>  노트북 또는 태블릿 · Claude, ChatGPT, Gemini 중 하나에 로그인</p>
-<p style="font-size:36px;line-height:1.5;color:#F2A65A"><b>어렵다면</b> 옆 선생님과 함께 · <b>일찍 끝났다면</b> 기능 하나 더 추가</p>
+<p style="font-size:30px;line-height:1.5;color:#DCE3EC"><b>준비물</b>  노트북 또는 태블릿 · Claude, ChatGPT, Gemini 중 하나에 로그인</p>
+<p style="font-size:30px;line-height:1.5;color:#F2A65A"><b>혼자 하기 어렵다면</b>  옆 선생님과 한 대로 함께 만들어도 좋습니다 · 일찍 끝났다면 기능을 하나 더 더하거나 다른 메뉴에 도전하세요</p>
 <aside class="notes">[시간 배분] 안내 6분(메뉴 1 · 프롬프트 재료 2 · 시연 2 · 도우미 소개 1) 다음, 직접 만들기 25분(만들기 10 · 고치기 10 · 나누기 5)입니다. 실제로는 처음 3~5분을 로그인 확인과 접속 문제로 쓰는 경우가 많으므로, 25분을 더 줄이지 마세요.
 
 [실습 시작 전 30초 점검] “지금 AI 서비스에 로그인되어 있지 않은 분 손 들어 주세요.” 로그인이 안 된 분은 바로 옆 선생님과 짝을 지어 줍니다. 짝 활동은 문제 해결의 첫 번째 방법입니다.
@@ -363,57 +362,57 @@
 
 [진행 팁] 강사는 책상 사이를 돌며 ‘미리보기가 뜨지 않는 분’을 먼저 찾습니다. 가장 흔한 문제이고, 다음 슬라이드들의 ‘막혔을 때’ 표로 대부분 해결됩니다. 시작 후 5분, 15분, 22분 지점에 남은 시간을 말해 주면 진도가 맞춰집니다.</aside>
 </section>
-<section id="menu" style="background:#F6F2E9;color:#1F2937;font-family:'Noto Sans KR', Arial, sans-serif;padding:84px 112px 130px;display:flex;flex-direction:column;gap:44px">
+<section id="menu" style="background:#F6F2E9;color:#1F2937;font-family:'Noto Sans KR', Arial, sans-serif;padding:116px 128px 100px;display:flex;flex-direction:column;gap:44px">
 <div style="display:flex;flex-direction:column;gap:12px">
-<p style="font-size:32px;font-weight:700;color:#B4501E">4 · 실습 메뉴</p>
+<p style="font-size:30px;font-weight:700;color:#B4501E">4 · 실습 메뉴</p>
 <h2 style="font-family:'Noto Sans KR', Arial, sans-serif;font-size:84px;font-weight:900;line-height:1.15;color:#1B2A41">무엇을 만들까요? 하나만 고르세요</h2>
 </div>
 <div style="display:grid;grid-template-columns:repeat(3, 1fr);gap:32px">
 <div style="display:flex;flex-direction:column;gap:10px;background:#FFFDF8;border:2px solid #DDD5C3;border-radius:20px;padding:32px 36px">
-<p style="font-size:30px;font-weight:700;color:#B4501E">A · 모든 교과</p>
-<h3 style="font-size:45px;font-weight:700;color:#1B2A41">발표자 뽑기</h3>
-<p style="font-size:32px;line-height:1.5;color:#4B5563">번호 범위를 넣으면 무작위로 한 명, 뽑힌 번호는 제외</p>
+<p style="font-size:24px;font-weight:700;color:#B4501E">A · 모든 교과</p>
+<h3 style="font-size:38px;font-weight:700;color:#1B2A41">발표자 뽑기</h3>
+<p style="font-size:26px;line-height:1.5;color:#4B5563">번호 범위를 넣으면 무작위로 한 명, 뽑힌 번호는 제외</p>
 </div>
 <div style="display:flex;flex-direction:column;gap:10px;background:#FFFDF8;border:2px solid #DDD5C3;border-radius:20px;padding:32px 36px">
-<p style="font-size:30px;font-weight:700;color:#B4501E">B · 모든 교과</p>
-<h3 style="font-size:45px;font-weight:700;color:#1B2A41">활동 타이머</h3>
-<p style="font-size:32px;line-height:1.5;color:#4B5563">활동 단계별 시간 설정, 큰 숫자와 종료 알림</p>
+<p style="font-size:24px;font-weight:700;color:#B4501E">B · 모든 교과</p>
+<h3 style="font-size:38px;font-weight:700;color:#1B2A41">활동 타이머</h3>
+<p style="font-size:26px;line-height:1.5;color:#4B5563">활동 단계별 시간 설정, 큰 숫자와 종료 알림</p>
 </div>
 <div style="display:flex;flex-direction:column;gap:10px;background:#FFFDF8;border:2px solid #DDD5C3;border-radius:20px;padding:32px 36px">
-<p style="font-size:30px;font-weight:700;color:#B4501E">C · 교과 수업</p>
-<h3 style="font-size:45px;font-weight:700;color:#1B2A41">OX 퀴즈</h3>
-<p style="font-size:32px;line-height:1.5;color:#4B5563">문제와 정답을 넣으면 학생이 풀고 바로 해설 확인</p>
+<p style="font-size:24px;font-weight:700;color:#B4501E">C · 교과 수업</p>
+<h3 style="font-size:38px;font-weight:700;color:#1B2A41">OX 퀴즈</h3>
+<p style="font-size:26px;line-height:1.5;color:#4B5563">문제와 정답을 넣으면 학생이 풀고 바로 해설 확인</p>
 </div>
 <div style="display:flex;flex-direction:column;gap:10px;background:#FFFDF8;border:2px solid #DDD5C3;border-radius:20px;padding:32px 36px">
-<p style="font-size:30px;font-weight:700;color:#B4501E">D · 복습</p>
-<h3 style="font-size:45px;font-weight:700;color:#1B2A41">용어 카드</h3>
-<p style="font-size:32px;line-height:1.5;color:#4B5563">앞면은 용어, 뒷면은 뜻. 뒤집기와 섞기</p>
+<p style="font-size:24px;font-weight:700;color:#B4501E">D · 복습</p>
+<h3 style="font-size:38px;font-weight:700;color:#1B2A41">용어 카드</h3>
+<p style="font-size:26px;line-height:1.5;color:#4B5563">앞면은 용어, 뒷면은 뜻. 뒤집기와 섞기</p>
 </div>
 <div style="display:flex;flex-direction:column;gap:10px;background:#FFFDF8;border:2px solid #DDD5C3;border-radius:20px;padding:32px 36px">
-<p style="font-size:30px;font-weight:700;color:#B4501E">E · 협동학습</p>
-<h3 style="font-size:45px;font-weight:700;color:#1B2A41">모둠 편성기</h3>
-<p style="font-size:32px;line-height:1.5;color:#4B5563">인원과 모둠 수를 넣으면 무작위로 모둠 편성</p>
+<p style="font-size:24px;font-weight:700;color:#B4501E">E · 협동학습</p>
+<h3 style="font-size:38px;font-weight:700;color:#1B2A41">모둠 편성기</h3>
+<p style="font-size:26px;line-height:1.5;color:#4B5563">인원과 모둠 수를 넣으면 무작위로 모둠 편성</p>
 </div>
 <div style="display:flex;flex-direction:column;gap:10px;background:#FFFDF8;border:2px solid #DDD5C3;border-radius:20px;padding:32px 36px">
-<p style="font-size:30px;font-weight:700;color:#B4501E">F · 학급 경영</p>
-<h3 style="font-size:45px;font-weight:700;color:#1B2A41">칭찬 점수판</h3>
-<p style="font-size:32px;line-height:1.5;color:#4B5563">모둠별 점수 올리기 버튼과 순위 표시</p>
+<p style="font-size:24px;font-weight:700;color:#B4501E">F · 학급 경영</p>
+<h3 style="font-size:38px;font-weight:700;color:#1B2A41">칭찬 점수판</h3>
+<p style="font-size:26px;line-height:1.5;color:#4B5563">모둠별 점수 올리기 버튼과 순위 표시</p>
 </div>
 </div>
-<p style="position:absolute;left:112px;bottom:44px;width:1696px;font-size:30px;color:#6B7280">실습 안내 · 22–28분 — 처음이라면 A나 B를 권합니다 · 학생은 이름 대신 번호로 입력하세요</p>
+<p style="font-size:30px;font-weight:700;color:#2B5E9E">처음이라면 A나 B를 권합니다 · 학생은 이름 대신 번호로 입력하세요</p>
 <aside class="notes">모두 ‘한 화면짜리’ 앱이라 10분 안에 첫 결과를 볼 수 있습니다. 고르는 데 1분 이상 쓰지 않도록, 정하지 못한 분은 ‘A 발표자 뽑기’를 기본으로 하라고 안내합니다. 오늘 처음이라면 A나 B처럼 단순한 것을, 교과에 바로 쓰고 싶다면 C나 D를 권합니다. 퀴즈나 용어 카드의 내용은 선생님이 직접 넣거나, AI가 만든 경우 반드시 정확한지 검토해야 합니다. 도입에서 나온 선생님들의 아이디어로 만들어도 좋습니다.</aside>
 </section>
-<section id="prompt" style="background:#F6F2E9;color:#1F2937;font-family:'Noto Sans KR', Arial, sans-serif;padding:84px 112px 130px;display:flex;flex-direction:column;gap:32px">
+<section id="prompt" style="background:#F6F2E9;color:#1F2937;font-family:'Noto Sans KR', Arial, sans-serif;padding:116px 128px 100px;display:flex;flex-direction:column;gap:32px">
 <div style="display:flex;flex-direction:column;gap:12px">
-<p style="font-size:35px;font-weight:700;color:#B4501E">4 · 실습 STEP 1 — 프롬프트 만드는 법</p>
+<p style="font-size:30px;font-weight:700;color:#B4501E">4 · 실습 STEP 1 — 프롬프트 만드는 법</p>
 <h2 style="font-family:'Noto Sans KR', Arial, sans-serif;font-size:84px;font-weight:900;line-height:1.15;color:#1B2A41">좋은 프롬프트에 꼭 들어갈 5가지</h2>
 </div>
 <div style="display:flex;flex-direction:row;gap:24px;align-items:center">
-<p style="font-size:37px;padding:12px 24px;border-radius:12px;background:#EBE5D6;color:#4B5563">✗ “발표자 뽑는 앱 만들어 줘”</p>
+<p style="font-size:28px;padding:12px 24px;border-radius:12px;background:#EBE5D6;color:#4B5563">✗ “발표자 뽑는 앱 만들어 줘”</p>
 <svg viewBox="0 0 48 26" aria-hidden="true" style="width:48px;height:26px;flex:none;"><polygon points="0,7.8 28.799999999999997,7.8 28.799999999999997,0 48.0,13.0 28.799999999999997,26.0 28.799999999999997,18.2 0,18.2" fill="#B4501E"/></svg>
-<p style="font-size:37px;font-weight:700;padding:12px 24px;border-radius:12px;background:#FCE9DC;color:#1B2A41">✓ 아래 5가지를 담아서 설명하기</p>
+<p style="font-size:28px;font-weight:700;padding:12px 24px;border-radius:12px;background:#FCE9DC;color:#1B2A41">✓ 아래 5가지를 담아서 설명하기</p>
 </div>
-<table style="width:1696px;font-size:30px;color:#1F2937;font-family:'Noto Sans KR', Arial, sans-serif">
+<table style="width:1664px;font-size:27px;color:#1F2937;font-family:'Noto Sans KR', Arial, sans-serif">
 <tr style="background:#1B2A41"><th style="width:22%;color:#F6F2E9;padding:16px 28px">재료</th><th style="width:33%;color:#F6F2E9;padding:16px 28px">스스로 물어보기</th><th style="width:45%;color:#F2A65A;padding:16px 28px">이렇게 쓰면 돼요</th></tr>
 <tr style="background:#FFFDF8"><td style="padding:16px 28px"><b>① 무엇을</b></td><td style="padding:16px 28px">이름은? 왜 필요한가?</td><td style="padding:16px 28px">오늘의 발표자 · 발표자를 공정하게 뽑는다</td></tr>
 <tr style="background:#F6F2E9"><td style="padding:16px 28px"><b>② 누가·어디서</b></td><td style="padding:16px 28px">누가, 어떤 기기로, 언제?</td><td style="padding:16px 28px">교사가 교실 TV로, 수업 중에</td></tr>
@@ -421,34 +420,33 @@
 <tr style="background:#F6F2E9"><td style="padding:16px 28px"><b>④ 어떤 모습으로</b></td><td style="padding:16px 28px">어떤 분위기인가?</td><td style="padding:16px 28px">밝고 경쾌하게</td></tr>
 <tr style="background:#FFFDF8"><td style="padding:16px 28px"><b>⑤ 꼭 지킬 것</b></td><td style="padding:16px 28px">무엇은 하면 안 되나?</td><td style="padding:16px 28px">개인정보 받지 않기 · 글씨와 버튼 크게</td></tr>
 </table>
-<p style="position:absolute;left:112px;bottom:44px;width:1696px;font-size:33px;color:#6B7280">실습 안내 · 22–28분 — ★ ③은 가장 중요한 재료입니다</p>
+<p style="font-size:30px;font-weight:700;color:#B4501E">★ ③ ‘어떤 순서로’가 가장 중요한 재료입니다</p>
 <aside class="notes">처음 바이브코딩을 하는 분들이 가장 많이 하는 실수는 “○○ 앱 만들어 줘” 한 줄만 보내는 것입니다. 그러면 AI가 나머지를 모두 짐작해서 만들기 때문에 원하는 것과 다른 결과가 나옵니다. 수업 지도안을 쓸 때처럼 다섯 가지 재료를 담으면 됩니다. 그중 ③ ‘어떤 순서로’가 가장 중요합니다. “기능: 추첨” 같은 단어보다 “뽑기 버튼을 누르면 번호가 돌다가 한 명이 나온다”처럼 사람이 하는 행동과 앱의 반응을 문장으로 쓰면 결과가 훨씬 정확해집니다. 다섯 가지가 실제 프롬프트에서 어떤 모습인지는 다음 슬라이드의 완성 예시로 먼저 보여 드리고, 그다음 슬라이드의 도우미 페이지로 직접 실습합니다.</aside>
 </section>
-<section id="example" style="background:#F6F2E9;color:#1F2937;font-family:'Noto Sans KR', Arial, sans-serif;padding:84px 112px 130px;display:flex;flex-direction:column;gap:36px">
+<section id="example" style="background:#F6F2E9;color:#1F2937;font-family:'Noto Sans KR', Arial, sans-serif;padding:116px 128px 100px;display:flex;flex-direction:column;gap:36px">
 <div style="display:flex;flex-direction:column;gap:12px">
-<p style="font-size:32px;font-weight:700;color:#B4501E">4 · 실습 STEP 1 — 예시 보기</p>
+<p style="font-size:30px;font-weight:700;color:#B4501E">4 · 실습 STEP 1 — 예시 보기</p>
 <h2 style="font-family:'Noto Sans KR', Arial, sans-serif;font-size:84px;font-weight:900;line-height:1.15;color:#1B2A41">먼저, 완성된 프롬프트는 이런 모습입니다</h2>
 </div>
 <div style="display:flex;flex-direction:row;gap:40px;align-items:stretch">
 <div style="flex:3;display:flex;flex-direction:column;gap:10px;background:#FFFDF8;border:2px solid #DDD5C3;border-radius:20px;padding:36px 44px">
-<p style="font-size:32px;line-height:1.45;color:#4B5563">너는 중학교 교사를 돕는 웹앱 개발자야. 코딩을 모르는 교사가 바로 쓸 수 있는 웹앱을 만들어 줘.</p>
-<p style="font-size:32px;line-height:1.45;color:#1F2937"><b style="color:#B4501E">① 무엇을</b> 오늘의 발표자 · 발표할 학생을 공정하게 무작위로 뽑는다</p>
-<p style="font-size:32px;line-height:1.45;color:#1F2937"><b style="color:#B4501E">② 누가·어디서</b> 교사가 교실 TV로, 수업 중 발표자를 정할 때</p>
-<p style="font-size:32px;line-height:1.45;color:#1F2937"><b style="color:#B4501E">③ 어떤 순서로</b> 1~28번처럼 번호 범위를 입력한다 → ‘뽑기’를 누르면 번호가 돌다가 한 명이 크게 나온다 → 뽑힌 번호는 목록에 쌓이고 다음 뽑기에서 빠진다</p>
-<p style="font-size:32px;line-height:1.45;color:#1F2937"><b style="color:#B4501E">④ 어떤 모습으로</b> 밝고 경쾌하게, 뽑힐 때 축하 효과</p>
-<p style="font-size:32px;line-height:1.45;color:#1F2937"><b style="color:#B4501E">⑤ 꼭 지킬 것</b> HTML 파일 하나 · 휴대폰과 PC 모두 · 큰 글씨와 버튼 · 개인정보 받지 않기</p>
+<p style="font-size:26px;line-height:1.45;color:#4B5563">너는 중학교 교사를 돕는 웹앱 개발자야. 코딩을 모르는 교사가 바로 쓸 수 있는 웹앱을 만들어 줘.</p>
+<p style="font-size:26px;line-height:1.45;color:#1F2937"><b style="color:#B4501E">① 무엇을</b> 오늘의 발표자 · 발표할 학생을 공정하게 무작위로 뽑는다</p>
+<p style="font-size:26px;line-height:1.45;color:#1F2937"><b style="color:#B4501E">② 누가·어디서</b> 교사가 교실 TV로, 수업 중 발표자를 정할 때</p>
+<p style="font-size:26px;line-height:1.45;color:#1F2937"><b style="color:#B4501E">③ 어떤 순서로</b> 1~28번처럼 번호 범위를 입력한다 → ‘뽑기’를 누르면 번호가 돌다가 한 명이 크게 나온다 → 뽑힌 번호는 목록에 쌓이고 다음 뽑기에서 빠진다</p>
+<p style="font-size:26px;line-height:1.45;color:#1F2937"><b style="color:#B4501E">④ 어떤 모습으로</b> 밝고 경쾌하게, 뽑힐 때 축하 효과</p>
+<p style="font-size:26px;line-height:1.45;color:#1F2937"><b style="color:#B4501E">⑤ 꼭 지킬 것</b> HTML 파일 하나 · 휴대폰과 PC 모두 · 큰 글씨와 버튼 · 개인정보 받지 않기</p>
 </div>
 <div style="flex:2;display:flex;flex-direction:column;gap:18px;background:#1B2A41;border-radius:20px;padding:36px 40px">
-<p style="font-size:32px;font-weight:700;color:#F2A65A">보내면 AI가 하는 일</p>
-<p style="font-size:36px;line-height:1.45;color:#F6F2E9">1. 화면 구성 계획</p>
-<p style="font-size:36px;line-height:1.45;color:#F6F2E9">2. 코드 작성</p>
-<p style="font-size:36px;line-height:1.45;color:#F6F2E9">3. 미리보기 화면 표시</p>
+<p style="font-size:30px;font-weight:700;color:#F2A65A">보내면 AI가 하는 일</p>
+<p style="font-size:30px;line-height:1.45;color:#F6F2E9">1. 화면 구성 계획</p>
+<p style="font-size:30px;line-height:1.45;color:#F6F2E9">2. 코드 작성</p>
+<p style="font-size:30px;line-height:1.45;color:#F6F2E9">3. 미리보기 화면 표시</p>
 <div style="flex:1"></div>
-<p style="font-size:32px;line-height:1.5;color:#DCE3EC">미리보기가 보이지 않으면 “미리보기로 보여 줘”라고 한 번 더 요청하세요.</p>
-<p style="font-size:32px;font-weight:700;line-height:1.5;color:#F2A65A">다음 슬라이드에서 내 앱의 프롬프트를 직접 만들어 봅니다.</p>
+<p style="font-size:26px;line-height:1.5;color:#DCE3EC">미리보기가 보이지 않으면 “미리보기로 보여 줘”라고 한 번 더 요청하세요.</p>
+<p style="font-size:26px;font-weight:700;line-height:1.5;color:#F2A65A">다음 슬라이드에서 내 앱의 프롬프트를 직접 만들어 봅니다.</p>
 </div>
 </div>
-<p style="position:absolute;left:112px;bottom:44px;width:1696px;font-size:30px;color:#6B7280">실습 안내 · 22–28분</p>
 <aside class="notes">실습에 들어가기 전에 완성된 프롬프트를 먼저 보여 주고, 앞에서 설명한 다섯 가지 재료(①~⑤)가 어디에 들어 있는지 하나씩 짚으며 설명합니다. 이어서 강사가 직접 복사해 AI에 붙여 넣고, 미리보기가 뜨는 과정을 시연합니다. 미리보기는 Claude에서는 ‘아티팩트’, ChatGPT와 Gemini에서는 ‘캔버스’라는 이름으로 나타납니다. 시연이 끝나면 다음 슬라이드의 도우미 페이지로 넘어가 선생님들이 각자 실습을 시작합니다. 도우미 페이지에서 ‘발표자 뽑기’ 예시를 누르면 이 프롬프트가 그대로 만들어집니다. 도우미 페이지를 쓰지 못하는 상황이면 아래 프롬프트를 직접 고쳐 써도 됩니다.
 
 너는 중학교 교사를 돕는 웹앱 개발자야. 코딩을 모르는 교사가 바로 쓸 수 있는 웹앱을 만들어 줘.
@@ -458,44 +456,43 @@
 4. 어떤 모습으로 - 분위기: [ ]
 5. 꼭 지킬 것 - HTML 파일 하나로 만들고 설치 없이 실행되게. 휴대폰과 PC 모두에서 잘 보이게. 글씨와 버튼을 크게. 학생 개인정보는 입력받지 마. 내 설명에 빠진 부분은 알맞게 정해서 먼저 만들고, 무엇을 정했는지 마지막에 알려 줘.</aside>
 </section>
-<section id="helper" style="background:#1B2A41;color:#F6F2E9;font-family:'Noto Sans KR', Arial, sans-serif;padding:84px 112px 130px;display:flex;flex-direction:column;gap:44px">
+<section id="helper" style="background:#1B2A41;color:#F6F2E9;font-family:'Noto Sans KR', Arial, sans-serif;padding:116px 128px 100px;display:flex;flex-direction:column;gap:44px">
 <div style="display:flex;flex-direction:column;gap:12px">
-<p style="font-size:32px;font-weight:700;color:#F2A65A">4 · 실습 STEP 1 — 직접 해 보기</p>
+<p style="font-size:30px;font-weight:700;color:#F2A65A">4 · 실습 STEP 1 — 직접 해 보기</p>
 <h2 style="font-family:'Noto Sans KR', Arial, sans-serif;font-size:84px;font-weight:900;line-height:1.15;color:#F6F2E9">이제 내 차례: 칸만 채우면 프롬프트 완성</h2>
 </div>
 <div style="display:flex;flex-direction:row;gap:72px;align-items:center">
 <div style="width:420px;display:flex;flex-direction:column;align-items:center;gap:20px;background:#FFFDF8;border-radius:24px;padding:40px">
 <div id="helper-qr" role="img" aria-label="프롬프트 도우미 접속 QR코드" style="width:340px;height:340px;background:#FFFFFF"></div>
-<p style="font-size:32px;font-weight:700;text-align:center;color:#1B2A41">앱 만들기 프롬프트 도우미</p>
-<p id="helper-url" style="font-size:27px;text-align:center;color:#2B5E9E;word-break:break-all"></p>
+<p style="font-size:26px;font-weight:700;text-align:center;color:#1B2A41">앱 만들기 프롬프트 도우미</p>
+<p id="helper-url" style="font-size:22px;text-align:center;color:#2B5E9E;word-break:break-all"></p>
 </div>
 <div style="flex:1;display:flex;flex-direction:column;gap:28px">
 <div style="display:flex;flex-direction:row;gap:24px;align-items:start">
-<p style="font-size:48px;font-weight:900;line-height:1;color:#F2A65A">1</p>
-<p style="font-size:38px;line-height:1.5;color:#F6F2E9">AI를 쓰는 노트북에서 주소를 직접 열거나, 휴대폰으로 QR코드에 접속합니다.</p>
+<p style="font-size:40px;font-weight:900;line-height:1;color:#F2A65A">1</p>
+<p style="font-size:32px;line-height:1.5;color:#F6F2E9">AI를 쓰는 노트북에서 주소를 직접 열거나, 휴대폰으로 QR코드에 접속합니다.</p>
 </div>
 <div style="display:flex;flex-direction:row;gap:24px;align-items:start">
-<p style="font-size:48px;font-weight:900;line-height:1;color:#F2A65A">2</p>
-<p style="font-size:38px;line-height:1.5;color:#F6F2E9">방금 본 예시처럼, 다섯 가지 질문에 내 앱에 맞게 답을 채웁니다. 막막하면 예시 버튼을 눌러 고쳐 씁니다.</p>
+<p style="font-size:40px;font-weight:900;line-height:1;color:#F2A65A">2</p>
+<p style="font-size:32px;line-height:1.5;color:#F6F2E9">방금 본 예시처럼, 다섯 가지 질문에 내 앱에 맞게 답을 채웁니다. 막막하면 예시 버튼을 눌러 고쳐 씁니다.</p>
 </div>
 <div style="display:flex;flex-direction:row;gap:24px;align-items:start">
-<p style="font-size:48px;font-weight:900;line-height:1;color:#F2A65A">3</p>
-<p style="font-size:38px;line-height:1.5;color:#F6F2E9">‘프롬프트 복사하기’를 누르고 AI 대화창에 붙여 넣어 보냅니다.</p>
+<p style="font-size:40px;font-weight:900;line-height:1;color:#F2A65A">3</p>
+<p style="font-size:32px;line-height:1.5;color:#F6F2E9">‘프롬프트 복사하기’를 누르고 AI 대화창에 붙여 넣어 보냅니다.</p>
 </div>
-<p style="font-size:32px;line-height:1.5;color:#BFC8D6">예시 6가지(발표자 뽑기, 활동 타이머, OX 퀴즈, 용어 카드, 모둠 편성기, 칭찬 점수판)가 들어 있어 방금 본 완성 예시처럼 바로 불러와 고쳐 쓸 수 있습니다.</p>
+<p style="font-size:26px;line-height:1.5;color:#BFC8D6">예시 6가지(발표자 뽑기, 활동 타이머, OX 퀴즈, 용어 카드, 모둠 편성기, 칭찬 점수판)가 들어 있어 방금 본 완성 예시처럼 바로 불러와 고쳐 쓸 수 있습니다.</p>
 </div>
 </div>
-<p style="position:absolute;left:112px;bottom:44px;width:1696px;font-size:30px;color:#BFC8D6">실습 · 28–53분</p>
 <aside class="notes">여기서부터 실습입니다. 도우미 페이지는 앞에서 본 완성 예시와 다섯 가지 재료를 질문 형식으로 바꾼 것으로, 선생님들이 각자 자기 앱에 맞게 칸을 채워 보게 합니다. 칸을 채우는 동안 오른쪽(휴대폰은 아래)에 프롬프트가 실시간으로 완성되고, 어느 재료를 채웠는지 표시됩니다. ‘꼭 지킬 것’ 항목은 기본으로 체크되어 있으니 처음이라면 그대로 두라고 안내해 주세요. QR코드는 지금 열려 있는 사이트 주소 뒤에 /helper 를 붙인 페이지로 자동 연결됩니다.
 
 [주의] 휴대폰으로 도우미를 열면 완성된 프롬프트를 노트북으로 옮겨야 해서 막히는 분이 많습니다. 노트북 화면 아래쪽의 주소(슬라이드에 표시됨)를 직접 입력해 노트북에서 여는 것을 기본으로 안내하고, QR코드는 휴대폰으로 AI를 쓰는 분이나 주소 입력이 불편한 분께 알려 주세요. 휴대폰으로 만든 경우에는 ‘프롬프트 복사하기’ 후 카카오톡 ‘나와의 채팅’이나 이메일로 보내면 노트북에서 바로 붙여 넣을 수 있습니다.</aside>
 </section>
-<section id="revise" style="background:#F6F2E9;color:#1F2937;font-family:'Noto Sans KR', Arial, sans-serif;padding:84px 112px 130px;display:flex;flex-direction:column;gap:40px">
+<section id="revise" style="background:#F6F2E9;color:#1F2937;font-family:'Noto Sans KR', Arial, sans-serif;padding:116px 128px 100px;display:flex;flex-direction:column;gap:40px">
 <div style="display:flex;flex-direction:column;gap:12px">
-<p style="font-size:32px;font-weight:700;color:#B4501E">4 · 실습 STEP 2 — 고치기</p>
+<p style="font-size:30px;font-weight:700;color:#B4501E">4 · 실습 STEP 2 — 고치기</p>
 <h2 style="font-family:'Noto Sans KR', Arial, sans-serif;font-size:84px;font-weight:900;line-height:1.15;color:#1B2A41">마음에 들지 않으면, 말로 고칩니다</h2>
 </div>
-<table style="width:1696px;font-size:34px;color:#1F2937;font-family:'Noto Sans KR', Arial, sans-serif">
+<table style="width:1664px;font-size:28px;color:#1F2937;font-family:'Noto Sans KR', Arial, sans-serif">
 <tr style="background:#1B2A41"><th style="width:30%;color:#F6F2E9;padding:18px 28px">이럴 때</th><th style="width:70%;color:#F2A65A;padding:18px 28px">이렇게 요청하기</th></tr>
 <tr style="background:#FFFDF8"><td style="padding:18px 28px"><b>글씨가 작아요</b></td><td style="padding:18px 28px">“교실 TV에서도 보이게 글씨와 버튼을 두 배로 키워 줘”</td></tr>
 <tr style="background:#F6F2E9"><td style="padding:18px 28px"><b>기능을 더하고 싶어요</b></td><td style="padding:18px 28px">“뽑힌 순서를 기록하고 ‘처음부터 다시’ 버튼을 추가해 줘”</td></tr>
@@ -503,16 +500,15 @@
 <tr style="background:#F6F2E9"><td style="padding:18px 28px"><b>분위기를 바꾸고 싶어요</b></td><td style="padding:18px 28px">“초록 칠판 느낌의 배경으로 바꿔 줘”</td></tr>
 <tr style="background:#FFFDF8"><td style="padding:18px 28px"><b>남과 나누고 싶어요</b></td><td style="padding:18px 28px">“처음 쓰는 사람을 위해 사용 방법을 화면 위에 짧게 넣어 줘”</td></tr>
 </table>
-<p style="font-size:36px;font-weight:700;color:#2B5E9E">팁: 한 번에 하나씩 요청하면 결과가 더 정확합니다.</p>
-<p style="position:absolute;left:112px;bottom:44px;width:1696px;font-size:30px;color:#6B7280">실습 · 28–53분</p>
+<p style="font-size:30px;font-weight:700;color:#2B5E9E">팁: 한 번에 하나씩 요청하면 결과가 더 정확합니다.</p>
 <aside class="notes">STEP 2에서는 직접 눌러 보며 불편한 점을 찾고, 위 표처럼 한 문장으로 요청합니다. 오류가 났을 때 오류 메시지나 화면을 그대로 보여 주는 것이 가장 빠른 해결 방법입니다. 결과가 이상해지면 “바로 전 상태로 되돌려 줘”라고 요청할 수 있다는 것도 알려 주세요. STEP 3 나누기에서는 옆 선생님과 노트북을 바꿔 써 보고, 좋은 점 하나와 고쳤으면 하는 점 하나를 말해 주도록 합니다. 완성한 앱은 각 서비스의 공유 기능으로 링크를 만들 수 있지만 방법은 서비스마다 다릅니다.</aside>
 </section>
-<section id="trouble" style="background:#F6F2E9;color:#1F2937;font-family:'Noto Sans KR', Arial, sans-serif;padding:84px 112px 130px;display:flex;flex-direction:column;gap:36px">
+<section id="trouble" style="background:#F6F2E9;color:#1F2937;font-family:'Noto Sans KR', Arial, sans-serif;padding:116px 128px 100px;display:flex;flex-direction:column;gap:36px">
 <div style="display:flex;flex-direction:column;gap:12px">
-<p style="font-size:32px;font-weight:700;color:#B4501E">4 · 실습 중 막혔을 때</p>
+<p style="font-size:30px;font-weight:700;color:#B4501E">4 · 실습 중 막혔을 때</p>
 <h2 style="font-family:'Noto Sans KR', Arial, sans-serif;font-size:84px;font-weight:900;line-height:1.15;color:#1B2A41">막혀도 괜찮습니다. 이렇게 해 보세요</h2>
 </div>
-<table style="width:1696px;font-size:27px;color:#1F2937;font-family:'Noto Sans KR', Arial, sans-serif">
+<table style="width:1664px;font-size:26px;color:#1F2937;font-family:'Noto Sans KR', Arial, sans-serif">
 <tr style="background:#1B2A41"><th style="width:32%;color:#F6F2E9;padding:14px 28px">이런 일이 생기면</th><th style="width:68%;color:#F2A65A;padding:14px 28px">이렇게 해 보세요</th></tr>
 <tr style="background:#FCE9DC"><td style="padding:14px 28px"><b>미리보기가 안 보이고 코드만 나와요</b></td><td style="padding:14px 28px">“HTML 파일 하나로 만들고, 미리보기로 보여 줘”라고 요청합니다. 그래도 안 되면 코드를 복사해 메모장에 붙여 넣고 <b>앱.html</b>로 저장한 뒤 더블클릭합니다.</td></tr>
 <tr style="background:#FFFDF8"><td style="padding:14px 28px"><b>로그인이 안 되거나 사용 한도가 찼어요</b></td><td style="padding:14px 28px">옆 선생님 노트북에서 함께 만들거나, 다른 AI 서비스(Claude · ChatGPT · Gemini)로 바꿔 봅니다.</td></tr>
@@ -520,97 +516,93 @@
 <tr style="background:#FFFDF8"><td style="padding:14px 28px"><b>갑자기 이상해지거나 멈췄어요</b></td><td style="padding:14px 28px">“바로 전 상태로 되돌려 줘” · 오류 화면을 캡처해 붙이고 “원인을 찾아서 고쳐 줘” · 그래도 안 되면 새 대화에서 프롬프트를 다시 보냅니다.</td></tr>
 <tr style="background:#F6F2E9"><td style="padding:14px 28px"><b>휴대폰에서 만든 프롬프트를 노트북으로 옮기기 어려워요</b></td><td style="padding:14px 28px">노트북에서 도우미 주소를 직접 열거나, 카카오톡 ‘나와의 채팅’으로 보내 붙여 넣습니다.</td></tr>
 </table>
-<p style="font-size:32px;font-weight:700;color:#2B5E9E">도움 요청 순서: ① 옆 선생님과 함께 → ② AI에게 오류 화면 그대로 보여 주기 → ③ 손 들기</p>
-<p style="position:absolute;left:112px;bottom:44px;width:1696px;font-size:30px;color:#6B7280">실습 · 28–53분</p>
+<p style="font-size:30px;font-weight:700;color:#2B5E9E">도움 요청 순서: ① 옆 선생님과 함께 → ② AI에게 오류 화면 그대로 보여 주기 → ③ 손 들기</p>
 <aside class="notes">실습 시작 전에 이 슬라이드를 한 번 훑어 주고, 실습 중에는 화면에 띄워 두거나 ‘막혔을 때는 이 슬라이드’라고 알려 줍니다. 가장 흔한 문제는 ① 미리보기가 뜨지 않는 것, ② 로그인·사용 한도 문제, ③ 빈칸이 막막해 손을 못 대는 것입니다. 강사가 모든 자리를 돌 수 없으므로 ‘옆 선생님 → AI에게 오류 그대로 보여 주기 → 강사’ 순서로 해결하도록 미리 약속하면 대기 시간이 크게 줄어듭니다. 메모장에서 .html로 저장해 열면 어느 AI 서비스를 쓰든 앱을 실행할 수 있다는 점은 ‘최후의 방법’으로 기억해 두세요. (파일 확장자가 보이지 않는 PC는 ‘앱.html’로 저장할 때 파일 형식을 ‘모든 파일’로 고르게 안내합니다.) 서비스마다 화면과 기능이 자주 바뀌므로, 연수 전에 강사가 직접 한 번 해 보고 표현을 맞춰 두면 좋습니다.</aside>
 </section>
-<section id="caution" style="background:#F6F2E9;color:#1F2937;font-family:'Noto Sans KR', Arial, sans-serif;padding:84px 112px 130px;display:flex;flex-direction:column;gap:44px">
+<section id="caution" style="background:#F6F2E9;color:#1F2937;font-family:'Noto Sans KR', Arial, sans-serif;padding:116px 128px 100px;display:flex;flex-direction:column;gap:44px">
 <div style="display:flex;flex-direction:column;gap:12px">
-<p style="font-size:32px;font-weight:700;color:#B4501E">5 · 정리 · 53–60분</p>
+<p style="font-size:30px;font-weight:700;color:#B4501E">5 · 정리 · 53–60분</p>
 <h2 style="font-family:'Noto Sans KR', Arial, sans-serif;font-size:84px;font-weight:900;line-height:1.15;color:#1B2A41">수업에 쓰기 전, 꼭 확인할 네 가지</h2>
 </div>
 <div style="display:grid;grid-template-columns:repeat(2, 1fr);gap:32px">
 <div style="display:flex;flex-direction:row;gap:28px;align-items:start;background:#FFFDF8;border:2px solid #DDD5C3;border-radius:20px;padding:36px 40px">
 <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#B4501E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:56px;height:56px;flex:none"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
 <div style="flex:1;display:flex;flex-direction:column;gap:8px">
-<h3 style="font-size:43px;font-weight:700;color:#1B2A41">개인정보</h3>
-<p style="font-size:34px;line-height:1.5;color:#4B5563">학생 이름·연락처·성적은 넣지 않고 번호를 씁니다.</p>
+<h3 style="font-size:36px;font-weight:700;color:#1B2A41">개인정보</h3>
+<p style="font-size:28px;line-height:1.5;color:#4B5563">학생 이름·연락처·성적은 넣지 않고 번호를 씁니다.</p>
 </div>
 </div>
 <div style="display:flex;flex-direction:row;gap:28px;align-items:start;background:#FFFDF8;border:2px solid #DDD5C3;border-radius:20px;padding:36px 40px">
 <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#B4501E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:56px;height:56px;flex:none"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.5-4.5"/></svg>
 <div style="flex:1;display:flex;flex-direction:column;gap:8px">
-<h3 style="font-size:43px;font-weight:700;color:#1B2A41">내용 확인</h3>
-<p style="font-size:34px;line-height:1.5;color:#4B5563">AI가 만든 퀴즈 정답과 교과 내용은 교사가 반드시 검토합니다.</p>
+<h3 style="font-size:36px;font-weight:700;color:#1B2A41">내용 확인</h3>
+<p style="font-size:28px;line-height:1.5;color:#4B5563">AI가 만든 퀴즈 정답과 교과 내용은 교사가 반드시 검토합니다.</p>
 </div>
 </div>
 <div style="display:flex;flex-direction:row;gap:28px;align-items:start;background:#FFFDF8;border:2px solid #DDD5C3;border-radius:20px;padding:36px 40px">
 <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#B4501E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:56px;height:56px;flex:none"><circle cx="9" cy="8" r="4"/><path d="M2 21v-1a6 6 0 0 1 12 0v1"/><path d="M16 4.5a4 4 0 0 1 0 7"/><path d="M22 21v-1a6 6 0 0 0-4-5.6"/></svg>
 <div style="flex:1;display:flex;flex-direction:column;gap:8px">
-<h3 style="font-size:43px;font-weight:700;color:#1B2A41">학생 사용</h3>
-<p style="font-size:34px;line-height:1.5;color:#4B5563">학생이 AI 서비스를 직접 쓰게 할 때는 이용 가능 연령과 학교 지침을 확인합니다.</p>
+<h3 style="font-size:36px;font-weight:700;color:#1B2A41">학생 사용</h3>
+<p style="font-size:28px;line-height:1.5;color:#4B5563">학생이 AI 서비스를 직접 쓰게 할 때는 이용 가능 연령과 학교 지침을 확인합니다.</p>
 </div>
 </div>
 <div style="display:flex;flex-direction:row;gap:28px;align-items:start;background:#FFFDF8;border:2px solid #DDD5C3;border-radius:20px;padding:36px 40px">
 <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#B4501E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:56px;height:56px;flex:none"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg>
 <div style="flex:1;display:flex;flex-direction:column;gap:8px">
-<h3 style="font-size:43px;font-weight:700;color:#1B2A41">기록 저장</h3>
-<p style="font-size:34px;line-height:1.5;color:#4B5563">한 파일짜리 앱은 새로고침하면 기록이 사라질 수 있어요. 필요하면 ‘결과 내려받기’ 기능을 요청합니다.</p>
+<h3 style="font-size:36px;font-weight:700;color:#1B2A41">기록 저장</h3>
+<p style="font-size:28px;line-height:1.5;color:#4B5563">한 파일짜리 앱은 새로고침하면 기록이 사라질 수 있어요. 필요하면 ‘결과 내려받기’ 기능을 요청합니다.</p>
 </div>
 </div>
 </div>
-<p style="position:absolute;left:112px;bottom:44px;width:1696px;font-size:30px;color:#6B7280">정리 · 53–60분</p>
 <aside class="notes">실습 결과를 두세 분 정도 짧게 공유한 뒤 이 슬라이드로 정리합니다. 앱을 실제 수업에 쓰기 전에 네 가지를 꼭 점검하도록 당부해 주세요. 특히 학생 개인정보는 처음부터 받지 않도록 설계하는 것이 가장 안전합니다. AI 서비스마다 이용 가능 연령과 약관이 다르므로, 학생이 직접 AI를 쓰는 수업은 학교 지침을 먼저 확인해야 합니다.</aside>
 </section>
-<section id="closing" data-transition="fade" style="background:#1B2A41;color:#F6F2E9;font-family:'Noto Sans KR', Arial, sans-serif;padding:84px 112px 130px;display:flex;flex-direction:column;gap:56px">
+<section id="closing" data-transition="fade" style="background:#1B2A41;color:#F6F2E9;font-family:'Noto Sans KR', Arial, sans-serif;padding:116px 128px 100px;display:flex;flex-direction:column;gap:56px">
 <h1 style="font-family:'Noto Sans KR', Arial, sans-serif;font-size:96px;font-weight:900;line-height:1.25;color:#F6F2E9">AI는 코드를 쓰고,<br><span style="color:#F2A65A">교사는 수업을 설계합니다.</span></h1>
 <div style="display:flex;flex-direction:column;gap:24px">
-<p style="font-size:38px;font-weight:700;color:#BFC8D6">다음 주에 해 볼 일</p>
+<p style="font-size:28px;font-weight:700;color:#BFC8D6">다음 주에 해 볼 일</p>
 <div style="display:flex;flex-direction:row;gap:32px">
 <div style="flex:1;background:#24364F;border-radius:20px;padding:36px 40px">
-<p style="font-size:40px;line-height:1.5;color:#F6F2E9"><b>1.</b> 오늘 만든 앱을 파일(.html)로 저장해 두고, 수업에서 한 번 써 보기</p>
+<p style="font-size:30px;line-height:1.5;color:#F6F2E9"><b>1.</b> 오늘 만든 앱을 파일(.html)로 저장해 두고, 수업에서 한 번 써 보기</p>
 </div>
 <div style="flex:1;background:#24364F;border-radius:20px;padding:36px 40px">
-<p style="font-size:40px;line-height:1.5;color:#F6F2E9"><b>2.</b> 불편했던 점을 한 줄씩 적어 두기</p>
+<p style="font-size:30px;line-height:1.5;color:#F6F2E9"><b>2.</b> 불편했던 점을 한 줄씩 적어 두기</p>
 </div>
 <div style="flex:1;background:#24364F;border-radius:20px;padding:36px 40px">
-<p style="font-size:40px;line-height:1.5;color:#F6F2E9"><b>3.</b> 그 메모를 다음 ‘고치기 프롬프트’로 쓰기</p>
+<p style="font-size:30px;line-height:1.5;color:#F6F2E9"><b>3.</b> 그 메모를 다음 ‘고치기 프롬프트’로 쓰기</p>
 </div>
 </div>
 </div>
-<p style="position:absolute;left:112px;bottom:44px;width:1696px;font-size:38px;color:#BFC8D6">질문과 나눔 · 감사합니다</p>
 <aside class="notes">마지막 메시지: 코딩을 배우지 않아도, 수업을 가장 잘 아는 교사가 직접 도구를 만들 수 있는 시대가 되었습니다. 오늘 만든 앱은 시작일 뿐이고, 써 보고 고치는 과정에서 점점 내 수업에 맞는 도구가 됩니다. 남은 시간에 질문을 받고, 시간이 남거나 “학생에게 어떻게 나눠 주나요?” 같은 질문이 나오면 다음의 ‘보너스’ 슬라이드를 보여 줍니다.
 
 [앱 보관 방법 안내] 오늘 만든 앱은 AI 대화 안에만 있으면 나중에 찾기 어렵습니다. 미리보기 화면의 복사·다운로드 기능이나, 코드를 복사해 메모장에 붙여 넣고 ‘앱.html’로 저장하면 인터넷이 없어도 더블클릭으로 다시 열 수 있습니다. 앞으로 고치고 싶을 때는 저장해 둔 코드를 AI 대화창에 붙여 넣고 “이 앱을 이렇게 바꿔 줘”라고 요청하면 됩니다.</aside>
 </section>
-<section id="bonus" style="background:#F6F2E9;color:#1F2937;font-family:'Noto Sans KR', Arial, sans-serif;padding:84px 112px 130px;display:flex;flex-direction:column;gap:32px">
+<section id="bonus" style="background:#F6F2E9;color:#1F2937;font-family:'Noto Sans KR', Arial, sans-serif;padding:116px 128px 100px;display:flex;flex-direction:column;gap:32px">
 <div style="display:flex;flex-direction:column;gap:12px">
-<p style="font-size:32px;font-weight:700;color:#B4501E">보너스 · 한 단계 더 (선택)</p>
+<p style="font-size:30px;font-weight:700;color:#B4501E">보너스 · 한 단계 더 (선택)</p>
 <h2 style="font-family:'Noto Sans KR', Arial, sans-serif;font-size:84px;font-weight:900;line-height:1.15;color:#1B2A41">내 앱에 ‘인터넷 주소’ 만들어 주기</h2>
 </div>
 <div style="display:flex;flex-direction:row;gap:28px">
 <div style="flex:1;display:flex;flex-direction:column;gap:8px;background:#FFFDF8;border:2px solid #DDD5C3;border-radius:20px;padding:28px 32px">
-<h3 style="font-size:38px;font-weight:700;color:#1B2A41">GitHub</h3>
-<p style="font-size:28px;line-height:1.45;color:#1F2937">앱 파일을 보관하는 <b>온라인 저장소</b>. 고친 기록이 모두 남아 이전 버전으로 되돌릴 수 있습니다.</p>
-<p style="font-size:26px;line-height:1.4;color:#6B7280">비유: 수정 기록이 남는 구글 드라이브</p>
+<h3 style="font-size:36px;font-weight:700;color:#1B2A41">GitHub</h3>
+<p style="font-size:26px;line-height:1.45;color:#1F2937">앱 파일을 보관하는 <b>온라인 저장소</b>. 고친 기록이 모두 남아 이전 버전으로 되돌릴 수 있습니다.</p>
+<p style="font-size:24px;line-height:1.4;color:#6B7280">비유: 수정 기록이 남는 구글 드라이브</p>
 </div>
 <div style="flex:1;display:flex;flex-direction:column;gap:8px;background:#FFFDF8;border:2px solid #DDD5C3;border-radius:20px;padding:28px 32px">
-<h3 style="font-size:38px;font-weight:700;color:#1B2A41">Vercel</h3>
-<p style="font-size:28px;line-height:1.45;color:#1F2937">저장소의 앱 파일을 <b>누구나 열 수 있는 주소</b>(○○.vercel.app)로 바꿔 주는 서비스. 개인 용도는 무료 요금제로 시작할 수 있습니다.</p>
-<p style="font-size:26px;line-height:1.4;color:#6B7280">비유: 교실 게시판에 앱을 전시하는 일</p>
+<h3 style="font-size:36px;font-weight:700;color:#1B2A41">Vercel</h3>
+<p style="font-size:26px;line-height:1.45;color:#1F2937">저장소의 앱 파일을 <b>누구나 열 수 있는 주소</b>(○○.vercel.app)로 바꿔 주는 서비스. 개인 용도는 무료 요금제로 시작할 수 있습니다.</p>
+<p style="font-size:24px;line-height:1.4;color:#6B7280">비유: 교실 게시판에 앱을 전시하는 일</p>
 </div>
 <div style="flex:1;display:flex;flex-direction:column;gap:8px;background:#1B2A41;border-radius:20px;padding:28px 32px">
-<h3 style="font-size:38px;font-weight:700;color:#F2A65A">둘을 연결하면</h3>
-<p style="font-size:28px;line-height:1.45;color:#F6F2E9">파일을 고쳐 GitHub에 올리기만 하면 <b>같은 주소에 자동으로 반영</b>됩니다. 학생은 설치 없이 링크나 QR로 접속합니다.</p>
-<p style="font-size:26px;line-height:1.4;color:#BFC8D6">이 강의 슬라이드도 이렇게 배포했습니다</p>
+<h3 style="font-size:36px;font-weight:700;color:#F2A65A">둘을 연결하면</h3>
+<p style="font-size:26px;line-height:1.45;color:#F6F2E9">파일을 고쳐 GitHub에 올리기만 하면 <b>같은 주소에 자동으로 반영</b>됩니다. 학생은 설치 없이 링크나 QR로 접속합니다.</p>
+<p style="font-size:24px;line-height:1.4;color:#BFC8D6">이 강의 슬라이드도 이렇게 배포했습니다</p>
 </div>
 </div>
 <div style="display:flex;flex-direction:column;gap:14px;background:#FCE9DC;border-radius:20px;padding:28px 36px">
-<p style="font-size:34px;font-weight:700;color:#B4501E">★ 보너스 도전 (어려움) — 오늘 만든 앱에 나만의 주소 만들기</p>
-<p style="font-size:28px;line-height:1.5;color:#1F2937"><b>1</b> GitHub 가입 후 새 저장소 만들기 → <b>2</b> 앱 코드를 <b>index.html</b> 파일로 올리기 → <b>3</b> Vercel에 GitHub로 로그인해 저장소 불러오고 Deploy → <b>4</b> 나온 주소를 QR코드로 만들어 학생에게 공유</p>
+<p style="font-size:28px;font-weight:700;color:#B4501E">★ 보너스 도전 (어려움) — 오늘 만든 앱에 나만의 주소 만들기</p>
+<p style="font-size:26px;line-height:1.5;color:#1F2937"><b>1</b> GitHub 가입 후 새 저장소 만들기 → <b>2</b> 앱 코드를 <b>index.html</b> 파일로 올리기 → <b>3</b> Vercel에 GitHub로 로그인해 저장소 불러오고 Deploy → <b>4</b> 나온 주소를 QR코드로 만들어 학생에게 공유</p>
 </div>
-<p style="font-size:28px;line-height:1.5;color:#4B5563"><b style="color:#B4501E">주의</b>  공개 저장소는 누구나 코드를 볼 수 있어요. 학생 이름 등 개인정보나 비밀번호·API 키는 절대 올리지 않습니다.</p>
-<p style="position:absolute;left:112px;bottom:44px;width:1696px;font-size:26px;color:#6B7280">보너스 · 시간이 남을 때 (60분 시간표에는 포함되지 않습니다)</p>
+<p style="font-size:26px;line-height:1.5;color:#4B5563"><b style="color:#B4501E">주의</b>  공개 저장소는 누구나 코드를 볼 수 있어요. 학생 이름 등 개인정보나 비밀번호·API 키는 절대 올리지 않습니다.</p>
 <aside class="notes">시간이 남거나 “학생들에게 어떻게 나눠 주나요?”라는 질문이 나왔을 때 보여 주는 선택 슬라이드입니다. 오늘 만든 앱은 AI 대화 안에서만 열리기 때문에, 학생에게 링크로 주려면 ‘주소’가 필요합니다.
 
 [쉬운 설명] GitHub는 파일을 올려 두는 온라인 저장소이고, 고친 내용이 모두 기록됩니다. Vercel은 그 저장소의 파일을 인터넷 주소로 바꿔 주는 서비스입니다. 둘을 연결해 두면 파일을 고쳐서 GitHub에 올릴 때마다 같은 주소의 앱이 자동으로 새로워집니다. 강사가 만든 이 슬라이드와 사례로 보여 드린 두 앱이 모두 이 방식입니다.
@@ -621,6 +613,7 @@
 
 [주의] 공개 저장소(Public)에 올린 파일은 누구나 볼 수 있습니다. 학생 개인정보, 비밀번호, API 키는 올리지 않습니다. 학생 정보를 저장하는 앱은 학교의 개인정보 지침을 먼저 확인해야 합니다.</aside>
 </section>
+<div id="topbar" role="navigation" aria-label="강의 목차와 진행 상황"><div class="prog"><i></i></div></div>
 </div></div>
 <div id="notes" hidden><h2>발표 메모</h2><div id="notes-text"></div></div>
 <nav id="bar" aria-label="슬라이드 이동">
@@ -636,11 +629,35 @@
   const slides=[...document.querySelectorAll('#stage>section')];
   const stage=document.getElementById('stage'), vp=document.getElementById('viewport');
   let i=0;
+  // 상단 목차·진행 띠
+  const chapters=[
+    {name:'도입',time:'0–4분',ids:['agenda','hook']},
+    {name:'개념',time:'4–15분',ids:['define','compare','teacher','agent','loop','tools']},
+    {name:'사례',time:'15–22분',ids:['case1','case2','lessons']},
+    {name:'실습',time:'22–53분',ids:['practice','menu','prompt','example','helper','revise','trouble']},
+    {name:'정리',time:'53–60분',ids:['caution','closing']},
+    {name:'보너스',time:'',ids:['bonus']}
+  ];
+  const bar=document.getElementById('topbar'), prog=bar.querySelector('.prog i');
+  chapters.forEach(c=>{
+    c.first=slides.findIndex(s=>c.ids.indexOf(s.id)>=0);
+    const d=document.createElement('div');d.className='seg';d.dataset.first=c.first;
+    d.innerHTML=c.name+(c.time?'<small>'+c.time+'</small>':'');
+    bar.insertBefore(d,bar.querySelector('.prog'));c.el=d;
+  });
+  function updateBar(){
+    const id=slides[i].id;
+    bar.style.display=id==='cover'?'none':'flex';
+    const cur=chapters.findIndex(c=>c.ids.indexOf(id)>=0);
+    chapters.forEach((c,k)=>{c.el.classList.toggle('on',k===cur);c.el.classList.toggle('done',k<cur);});
+    prog.style.width=(slides.length>1?i/(slides.length-1)*100:0)+'%';
+  }
   function fit(){const s=Math.min(vp.clientWidth/1920,vp.clientHeight/1080);stage.style.transform='scale('+s+')';}
   function show(n){
     i=Math.max(0,Math.min(slides.length-1,n));
     slides.forEach((s,k)=>s.classList.toggle('on',k===i));
     document.getElementById('count').textContent=(i+1)+' / '+slides.length;
+    updateBar();
     const a=slides[i].querySelector('aside.notes');
     document.getElementById('notes-text').textContent=a?a.textContent.trim():'메모가 없습니다.';
     if(location.hash!=='#slide-'+(i+1)) history.replaceState(null,'','#slide-'+(i+1));
@@ -668,7 +685,7 @@
   let tx=null;
   vp.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;},{passive:true});
   vp.addEventListener('touchend',e=>{if(tx===null)return;const d=e.changedTouches[0].clientX-tx;if(Math.abs(d)>50)show(d<0?i+1:i-1);tx=null;});
-  vp.addEventListener('click',e=>{if(e.target.closest('a'))return;const r=vp.getBoundingClientRect();show(e.clientX>r.left+r.width/2?i+1:i-1);});
+  vp.addEventListener('click',e=>{if(e.target.closest('a'))return;const sg=e.target.closest('#topbar .seg');if(sg){show(parseInt(sg.dataset.first,10));return;}if(e.target.closest('#topbar'))return;const r=vp.getBoundingClientRect();show(e.clientX>r.left+r.width/2?i+1:i-1);});
   window.addEventListener('resize',fit);
   window.addEventListener('hashchange',()=>show(fromHash()));
 
