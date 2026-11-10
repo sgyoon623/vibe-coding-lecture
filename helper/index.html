@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}[hidden]{display:none!important}</style>
+<title>앱 만들기 프롬프트 도우미</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap">
+</head>
+<body>
+<style>
+/* Layout: 왼쪽 단계별 입력 폼, 오른쪽 실시간 완성 프롬프트(데스크톱에서 고정). 휴대폰에서는 한 줄로 쌓임 */
+:root{
+  --bg:#F2F4F7; --surface:#FFFFFF; --ink:#18212F; --muted:#556072; --line:#D6DCE5;
+  --accent:#2D5BC9; --accent-ink:#FFFFFF; --accent-soft:#E5ECFA; --mark:#B4501E; --ok:#1F7A4D; --code-bg:#F7F8FB;
+  --font-ui:'Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',Arial,sans-serif;
+  --font-code:ui-monospace,'D2Coding',Consolas,'Courier New',monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0F141B; --surface:#17202B; --ink:#E7ECF3; --muted:#9BA7B8; --line:#2A3544;
+  --accent:#86A6F2; --accent-ink:#0F141B; --accent-soft:#1D2A44; --mark:#F0A066; --ok:#62C391; --code-bg:#121A24; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0F141B; --surface:#17202B; --ink:#E7ECF3; --muted:#9BA7B8; --line:#2A3544;
+  --accent:#86A6F2; --accent-ink:#0F141B; --accent-soft:#1D2A44; --mark:#F0A066; --ok:#62C391; --code-bg:#121A24; color-scheme:dark}
+*{box-sizing:border-box}
+body{word-break:keep-all;overflow-wrap:break-word;background:var(--bg);color:var(--ink);font-family:var(--font-ui);font-size:16px;line-height:1.6;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 48px}
+.wrap{max-width:1140px;margin:0 auto;display:flex;flex-direction:column;gap:24px}
+header{display:flex;flex-direction:column;gap:8px}
+.eyebrow{font-size:13px;font-weight:700;letter-spacing:.06em;color:var(--mark)}
+h1{font-size:clamp(26px,4vw,36px);font-weight:900;line-height:1.25;margin:0;text-wrap:balance}
+.lead{margin:0;color:var(--muted);max-width:62ch}
+.presets{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.presets span{font-size:14px;font-weight:700;color:var(--muted);margin-right:4px}
+.chip{font:inherit;font-size:14px;padding:7px 14px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:700}
+.chip.ghost{background:transparent;color:var(--muted)}
+.layout{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:24px;align-items:start}
+@media (max-width:860px){.layout{grid-template-columns:minmax(0,1fr)}}
+form{display:flex;flex-direction:column;gap:16px;min-width:0}
+fieldset{border:1px solid var(--line);background:var(--surface);border-radius:14px;padding:20px 20px 22px;margin:0;display:flex;flex-direction:column;gap:14px;min-width:0}
+legend{display:contents}
+.step-head{display:flex;gap:12px;align-items:baseline}
+.num{flex:none;width:30px;height:30px;border-radius:50%;background:var(--accent-soft);color:var(--accent);font-weight:900;display:grid;place-items:center;font-size:15px}
+.step-title{font-size:19px;font-weight:700}
+.why{margin:-6px 0 0 42px;font-size:14px;color:var(--muted)}
+label.f{display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:700;color:var(--ink)}
+label.f small{font-weight:400;color:var(--muted)}
+input[type=text],textarea{font:inherit;font-size:16px;width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink)}
+textarea{resize:vertical;min-height:64px}
+input:focus-visible,textarea:focus-visible,.chip:focus-visible,button:focus-visible,.opt input:focus-visible+span{outline:3px solid var(--accent);outline-offset:2px}
+.row{display:flex;flex-wrap:wrap;gap:8px}
+.opt{position:relative}
+.opt input{position:absolute;opacity:0;width:1px;height:1px}
+.opt span{display:inline-block;font-size:15px;padding:8px 14px;border-radius:10px;border:1px solid var(--line);background:var(--bg);cursor:pointer}
+.opt input:checked+span{background:var(--accent-soft);border-color:var(--accent);color:var(--ink);font-weight:700}
+.checks{display:flex;flex-direction:column;gap:8px}
+.checks label{display:flex;gap:10px;align-items:flex-start;font-size:15px;cursor:pointer}
+.checks input{width:18px;height:18px;margin-top:3px;accent-color:var(--accent);flex:none}
+.group-label{font-size:14px;font-weight:700}
+aside.out{position:sticky;top:calc(env(safe-area-inset-top,0px) + 16px);display:flex;flex-direction:column;gap:12px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px;min-width:0}
+.out-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.out-head h2{font-size:19px;margin:0}
+.status{display:flex;gap:6px;flex-wrap:wrap}
+.dot{font-size:12px;font-weight:700;padding:3px 9px;border-radius:999px;border:1px solid var(--line);color:var(--muted)}
+.dot.done{border-color:var(--ok);color:var(--ok)}
+#result{font-family:var(--font-code);font-size:14px;line-height:1.65;white-space:pre-wrap;word-break:break-word;background:var(--code-bg);border:1px solid var(--line);border-radius:10px;padding:14px;margin:0;max-height:min(58vh,560px);overflow:auto;width:100%;color:var(--ink)}
+.copy{font:inherit;font-size:17px;font-weight:700;padding:13px 16px;border:none;border-radius:12px;background:var(--accent);color:var(--accent-ink);cursor:pointer}
+.msg{min-height:1.4em;font-size:14px;color:var(--ok);margin:0}
+.hint{font-size:14px;color:var(--muted);margin:0}
+.next{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:10px}
+.next h2{font-size:19px;margin:0}
+.next ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:4px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">바이브코딩 실습 · STEP 1</div>
+    <h1>앱 만들기 프롬프트 도우미</h1>
+    <p class="lead">다섯 가지 질문에 답하면 AI에게 보낼 프롬프트가 오른쪽(휴대폰은 아래)에 완성됩니다. 복사해서 Claude, ChatGPT, Gemini 중 하나에 붙여 넣으세요.</p>
+  </header>
+
+  <div class="presets" role="group" aria-label="예시 불러오기">
+    <span>예시 불러오기</span>
+    <button type="button" class="chip" data-preset="picker">발표자 뽑기</button>
+    <button type="button" class="chip" data-preset="timer">활동 타이머</button>
+    <button type="button" class="chip" data-preset="quiz">OX 퀴즈</button>
+    <button type="button" class="chip" data-preset="cards">용어 카드</button>
+    <button type="button" class="chip" data-preset="groups">모둠 편성기</button>
+    <button type="button" class="chip" data-preset="score">칭찬 점수판</button>
+    <button type="button" class="chip ghost" id="clear">모두 비우기</button>
+  </div>
+
+  <div class="layout">
+    <form id="f" autocomplete="off">
+      <fieldset>
+        <legend><div class="step-head"><span class="num">1</span><span class="step-title">무엇을 만드나요?</span></div></legend>
+        <p class="why">AI가 가장 먼저 알아야 할 것은 이 앱의 이름과 목적입니다.</p>
+        <label class="f" for="name">앱 이름 <input type="text" id="name" placeholder="예: 오늘의 발표자"></label>
+        <label class="f" for="goal">한 줄 목적 <small>이 앱이 해결해 주는 불편을 한 문장으로</small>
+          <input type="text" id="goal" placeholder="예: 발표할 학생을 공정하게 무작위로 뽑는다"></label>
+      </fieldset>
+
+      <fieldset>
+        <legend><div class="step-head"><span class="num">2</span><span class="step-title">누가, 어디서 쓰나요?</span></div></legend>
+        <p class="why">쓰는 사람과 기기에 따라 글씨 크기와 화면 배치가 달라집니다.</p>
+        <div class="group-label" id="who-l">주로 쓰는 사람</div>
+        <div class="row" role="radiogroup" aria-labelledby="who-l">
+          <label class="opt"><input type="radio" name="who" id="who-t" value="교사"><span>교사</span></label>
+          <label class="opt"><input type="radio" name="who" id="who-s" value="학생"><span>학생</span></label>
+          <label class="opt"><input type="radio" name="who" id="who-b" value="교사와 학생 모두"><span>둘 다</span></label>
+        </div>
+        <div class="group-label" id="dev-l">사용하는 기기 <small style="font-weight:400;color:var(--muted)">(여러 개 선택 가능)</small></div>
+        <div class="row" role="group" aria-labelledby="dev-l">
+          <label class="opt"><input type="checkbox" name="dev" id="dev-tv" value="교실 TV·전자칠판"><span>교실 TV·전자칠판</span></label>
+          <label class="opt"><input type="checkbox" name="dev" id="dev-ph" value="학생 휴대폰"><span>학생 휴대폰</span></label>
+          <label class="opt"><input type="checkbox" name="dev" id="dev-pc" value="PC·노트북"><span>PC·노트북</span></label>
+          <label class="opt"><input type="checkbox" name="dev" id="dev-tb" value="태블릿"><span>태블릿</span></label>
+        </div>
+        <label class="f" for="when">사용하는 상황 <input type="text" id="when" placeholder="예: 수업 중 발표자를 정할 때"></label>
+      </fieldset>
+
+      <fieldset>
+        <legend><div class="step-head"><span class="num">3</span><span class="step-title">어떤 순서로 쓰나요?</span></div></legend>
+        <p class="why">가장 중요한 칸입니다. “○○을 누르면 △△가 된다”처럼 사람이 하는 행동과 앱의 반응을 함께 쓰세요.</p>
+        <label class="f" for="s1">1단계 <input type="text" id="s1" placeholder="예: 시작 번호와 끝 번호(1~28번)를 입력한다"></label>
+        <label class="f" for="s2">2단계 <input type="text" id="s2" placeholder="예: ‘뽑기’를 누르면 번호가 돌다가 한 명이 크게 나타난다"></label>
+        <label class="f" for="s3">3단계 <input type="text" id="s3" placeholder="예: 뽑힌 번호는 아래 목록에 쌓이고 다음 뽑기에서 빠진다"></label>
+        <label class="f" for="extra">더 있으면 좋은 기능 <small>(선택)</small>
+          <textarea id="extra" placeholder="예: ‘처음부터 다시’ 버튼, 뽑힐 때 효과음"></textarea></label>
+      </fieldset>
+
+      <fieldset>
+        <legend><div class="step-head"><span class="num">4</span><span class="step-title">어떤 모습이면 좋을까요?</span></div></legend>
+        <p class="why">분위기 한 가지만 골라도 충분합니다.</p>
+        <div class="row" role="radiogroup" aria-label="화면 분위기">
+          <label class="opt"><input type="radio" name="mood" id="m1" value="밝고 경쾌하게"><span>밝고 경쾌하게</span></label>
+          <label class="opt"><input type="radio" name="mood" id="m2" value="깔끔하고 차분하게"><span>깔끔하고 차분하게</span></label>
+          <label class="opt"><input type="radio" name="mood" id="m3" value="초록 칠판 느낌으로"><span>칠판 느낌</span></label>
+          <label class="opt"><input type="radio" name="mood" id="m4" value="게임처럼 신나게"><span>게임처럼 신나게</span></label>
+          <label class="opt"><input type="radio" name="mood" id="m5" value="옛 문서·한지 느낌으로"><span>옛 문서·한지 느낌</span></label>
+        </div>
+        <label class="f" for="color">원하는 색이나 참고할 점 <small>(선택)</small>
+          <input type="text" id="color" placeholder="예: 우리 학교 상징색인 남색을 써 줘"></label>
+      </fieldset>
+
+      <fieldset>
+        <legend><div class="step-head"><span class="num">5</span><span class="step-title">꼭 지킬 것</span></div></legend>
+        <p class="why">처음이라면 기본으로 체크된 항목을 그대로 두세요.</p>
+        <div class="checks">
+          <label for="c1"><input type="checkbox" id="c1" checked> HTML 파일 하나로, 설치 없이 바로 실행되게</label>
+          <label for="c2"><input type="checkbox" id="c2" checked> 휴대폰과 PC 화면 모두에서 잘 보이게</label>
+          <label for="c3"><input type="checkbox" id="c3" checked> 중학생이 설명 없이 쓰도록 글씨와 버튼을 크게</label>
+          <label for="c4"><input type="checkbox" id="c4" checked> 학생 이름·연락처 등 개인정보는 입력받지 않기</label>
+          <label for="c5"><input type="checkbox" id="c5"> 결과를 파일로 내려받는 버튼 넣기</label>
+          <label for="c6"><input type="checkbox" id="c6" checked> 완성 후 더 좋게 만들 아이디어 3가지 제안하기</label>
+        </div>
+      </fieldset>
+    </form>
+
+    <aside class="out" aria-label="완성된 프롬프트">
+      <div class="out-head">
+        <h2>완성된 프롬프트</h2>
+        <div class="status" id="status" aria-label="채운 항목"></div>
+      </div>
+      <pre id="result" tabindex="0"></pre>
+      <button type="button" class="copy" id="copy">프롬프트 복사하기</button>
+      <p class="msg" id="msg" role="status"></p>
+      <p class="hint">비어 있는 칸은 [대괄호]로 남습니다. 전부 채우지 않아도 되지만, 3번 ‘어떤 순서로’는 꼭 채워 주세요.</p>
+    </aside>
+  </div>
+
+  <section class="next">
+    <h2>STEP 2 · 결과를 보고 이렇게 고쳐 달라고 하세요</h2>
+    <ul>
+      <li>“교실 TV에서도 보이게 글씨와 버튼을 두 배로 키워 줘”</li>
+      <li>“버튼을 눌러도 반응이 없어. 원인을 찾아서 고쳐 줘” (화면 캡처를 함께 보내면 더 좋아요)</li>
+      <li>“처음 쓰는 사람을 위해 사용 방법을 화면 위에 짧게 넣어 줘”</li>
+      <li>한 번에 하나씩 요청하면 결과가 더 정확합니다.</li>
+    </ul>
+  </section>
+</div>
+
+<script>
+(function(){
+  const $ = id => document.getElementById(id);
+  const PRESETS = {
+    picker:{name:"오늘의 발표자",goal:"발표할 학생을 공정하게 무작위로 뽑는다",who:"교사",dev:["교실 TV·전자칠판"],when:"수업 중 발표자를 정할 때",
+      s1:"시작 번호와 끝 번호(예: 1~28번)를 입력한다",s2:"‘뽑기’ 버튼을 누르면 번호가 빠르게 돌다가 한 명이 크게 나타난다",s3:"뽑힌 번호는 아래 목록에 쌓이고 다음 뽑기에서 빠진다",extra:"‘처음부터 다시’ 버튼, 뽑힐 때 축하 효과",mood:"밝고 경쾌하게",color:""},
+    timer:{name:"모둠 활동 타이머",goal:"활동 단계마다 남은 시간을 모두가 볼 수 있게 보여 준다",who:"교사",dev:["교실 TV·전자칠판"],when:"모둠 활동을 여러 단계로 진행할 때",
+      s1:"활동 단계 이름과 시간(예: 자료 읽기 5분, 토의 10분, 발표 준비 5분)을 입력한다",s2:"‘시작’을 누르면 현재 단계 이름과 남은 시간이 화면 가득 크게 나타난다",s3:"한 단계가 끝나면 알림과 함께 다음 단계로 자동으로 넘어간다",extra:"일시정지 버튼, 1분 남았을 때 색이 바뀌기",mood:"깔끔하고 차분하게",color:""},
+    quiz:{name:"단원 OX 퀴즈",goal:"배운 내용을 학생이 스스로 확인한다",who:"교사와 학생 모두",dev:["학생 휴대폰"],when:"수업 마무리 5분 동안",
+      s1:"교사가 문제, 정답(O 또는 X), 해설을 10개까지 입력한다",s2:"학생이 O나 X를 누르면 정답 여부와 해설이 바로 나온다",s3:"마지막 문제가 끝나면 맞힌 개수와 틀린 문제를 다시 보여 준다",extra:"문제 순서 섞기",mood:"게임처럼 신나게",color:""},
+    cards:{name:"역사 용어 카드",goal:"핵심 용어와 뜻을 카드로 뒤집으며 복습한다",who:"학생",dev:["학생 휴대폰","태블릿"],when:"단원 복습이나 시험 전 자습 시간에",
+      s1:"교사가 용어와 뜻을 한 줄에 하나씩 입력한다",s2:"학생이 카드를 누르면 앞면(용어)과 뒷면(뜻)이 뒤집힌다",s3:"‘알아요’와 ‘다시 볼래요’를 눌러 다시 볼 카드만 모은다",extra:"카드 섞기 버튼",mood:"옛 문서·한지 느낌으로",color:""},
+    groups:{name:"모둠 편성기",goal:"번호로 모둠을 공정하게 무작위로 나눈다",who:"교사",dev:["교실 TV·전자칠판","PC·노트북"],when:"협동학습을 시작하기 전에",
+      s1:"학생 수(번호 범위)와 모둠 수를 입력한다",s2:"‘편성하기’를 누르면 번호가 모둠별 칸에 고르게 나뉘어 나타난다",s3:"마음에 들지 않으면 ‘다시 섞기’로 새로 편성한다",extra:"결석한 번호는 빼고 편성하기",mood:"깔끔하고 차분하게",color:""},
+    score:{name:"모둠 칭찬 점수판",goal:"모둠 활동에서 칭찬 점수를 쌓아 보여 준다",who:"교사",dev:["교실 TV·전자칠판"],when:"모둠 활동이 이어지는 수업 내내",
+      s1:"모둠 이름과 모둠 수를 입력한다",s2:"모둠 카드의 ‘+1’ 버튼을 누르면 점수가 오르고 살짝 반짝인다",s3:"점수 순서대로 모둠 순위가 바뀌어 보인다",extra:"점수 초기화 버튼, 실수로 누른 점수 되돌리기",mood:"밝고 경쾌하게",color:""}
+  };
+  const FIELDS = ["name","goal","when","s1","s2","s3","extra","color"];
+  const CONDS = {
+    c1:"HTML 파일 하나로 만들고, 설치 없이 바로 실행되게 해 줘.",
+    c2:"휴대폰과 PC 화면 모두에서 잘 보이게 해 줘.",
+    c3:"중학생이 설명 없이도 쓸 수 있게 글씨와 버튼을 크게 해 줘.",
+    c4:"학생 이름, 연락처 등 개인정보는 입력받지 마.",
+    c5:"결과를 파일로 내려받는 버튼을 넣어 줘.",
+    c6:"완성하면 더 좋게 만들 아이디어 3가지를 제안해 줘."
+  };
+  const v = id => $(id).value.trim();
+  const radio = n => { const r = document.querySelector('input[name="'+n+'"]:checked'); return r ? r.value : ""; };
+  const or = (x, ph) => x || "[" + ph + "]";
+
+  function build(){
+    const devs = [...document.querySelectorAll('input[name="dev"]:checked')].map(x=>x.value);
+    const lines = [];
+    lines.push("너는 중학교 교사를 돕는 웹앱 개발자야. 코딩을 모르는 교사가 바로 쓸 수 있는 웹앱을 만들어 줘.");
+    lines.push("");
+    lines.push("1. 무엇을 만드나");
+    lines.push("- 앱 이름: " + or(v("name"),"앱 이름"));
+    lines.push("- 목적: " + or(v("goal"),"이 앱이 해결하는 불편 한 문장"));
+    lines.push("");
+    lines.push("2. 누가, 어디서 쓰나");
+    lines.push("- 주로 쓰는 사람: " + or(radio("who"),"교사 / 학생 / 둘 다"));
+    lines.push("- 사용 기기: " + (devs.length ? devs.join(", ") : "[교실 TV, 학생 휴대폰 등]"));
+    lines.push("- 사용하는 상황: " + or(v("when"),"어떤 수업·업무에서 쓰는지"));
+    lines.push("");
+    lines.push("3. 어떤 순서로 쓰나");
+    lines.push("① " + or(v("s1"),"처음에 하는 행동"));
+    lines.push("② " + or(v("s2"),"버튼을 누르면 일어나는 일"));
+    lines.push("③ " + or(v("s3"),"그다음에 보이는 결과"));
+    if (v("extra")) lines.push("- 더 있으면 좋은 기능: " + v("extra"));
+    lines.push("");
+    lines.push("4. 어떤 모습으로");
+    lines.push("- 분위기: " + or(radio("mood"),"화면 분위기"));
+    if (v("color")) lines.push("- 참고: " + v("color"));
+    lines.push("");
+    lines.push("5. 꼭 지킬 것");
+    Object.keys(CONDS).forEach(k => { if ($(k).checked) lines.push("- " + CONDS[k]); });
+    lines.push("- 내 설명에 빠진 부분은 알맞게 정해서 먼저 만들고, 무엇을 정했는지 마지막에 짧게 알려 줘.");
+    $("result").textContent = lines.join("\n");
+
+    const done = [
+      ["무엇을", !!(v("name") && v("goal"))],
+      ["누가·어디서", !!(radio("who") && (devs.length || v("when")))],
+      ["순서", !!(v("s1") && v("s2"))],
+      ["모습", !!radio("mood")],
+      ["지킬 것", Object.keys(CONDS).some(k => $(k).checked)]
+    ];
+    $("status").innerHTML = done.map(([t,ok]) => '<span class="dot'+(ok?' done':'')+'">'+(ok?'✓ ':'')+t+'</span>').join("");
+    save();
+  }
+
+  function setPresetButtons(key){
+    document.querySelectorAll('[data-preset]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.preset === key)));
+  }
+  function load(key){
+    const p = PRESETS[key]; if (!p) return;
+    FIELDS.forEach(f => $(f).value = p[f] || "");
+    document.querySelectorAll('input[name="who"]').forEach(r => r.checked = r.value === p.who);
+    document.querySelectorAll('input[name="mood"]').forEach(r => r.checked = r.value === p.mood);
+    document.querySelectorAll('input[name="dev"]').forEach(c => c.checked = p.dev.includes(c.value));
+    setPresetButtons(key); build();
+  }
+  function clearAll(){
+    FIELDS.forEach(f => $(f).value = "");
+    document.querySelectorAll('input[name="who"],input[name="mood"],input[name="dev"]').forEach(x => x.checked = false);
+    setPresetButtons(null); build(); $("name").focus();
+  }
+
+  function save(){
+    try{
+      const data = {fields:{},checks:{}};
+      FIELDS.forEach(f => data.fields[f] = $(f).value);
+      document.querySelectorAll('#f input[type=radio], #f input[type=checkbox]').forEach(x => data.checks[x.id] = x.checked);
+      localStorage.setItem("prompt-helper-draft", JSON.stringify(data));
+    }catch(e){}
+  }
+  function restore(){
+    try{
+      const raw = localStorage.getItem("prompt-helper-draft"); if (!raw) return false;
+      const data = JSON.parse(raw);
+      FIELDS.forEach(f => { if (typeof data.fields[f] === "string") $(f).value = data.fields[f]; });
+      Object.keys(data.checks || {}).forEach(id => { const el = $(id); if (el) el.checked = !!data.checks[id]; });
+      return true;
+    }catch(e){ return false; }
+  }
+
+  $("f").addEventListener("input", () => { setPresetButtons(null); build(); });
+  $("f").addEventListener("submit", e => e.preventDefault());
+  document.querySelectorAll('[data-preset]').forEach(b => b.addEventListener("click", () => load(b.dataset.preset)));
+  $("clear").addEventListener("click", clearAll);
+
+  $("copy").addEventListener("click", () => {
+    const text = $("result").textContent;
+    const done = () => { $("msg").textContent = "복사했어요. AI 대화창에 붙여 넣으세요."; };
+    const fallback = () => {
+      const sel = window.getSelection(); const range = document.createRange();
+      range.selectNodeContents($("result")); sel.removeAllRanges(); sel.addRange(range);
+      $("msg").textContent = "자동 복사가 막혀 있어요. 선택된 글을 길게 누르거나 Ctrl+C로 복사하세요.";
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, fallback);
+    else fallback();
+  });
+
+  if (restore()) { setPresetButtons(null); build(); } else { load("picker"); }
+})();
+</script>
+
+</body>
+</html>
