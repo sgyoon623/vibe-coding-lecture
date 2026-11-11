@@ -43,6 +43,11 @@
   #topbar .prog i{display:block;height:100%;width:0;background:#F2A65A;transition:width .3s}
   @media (prefers-reduced-motion:reduce){#topbar .prog i{transition:none}}
   #stage aside.notes{display:none}
+  #stage .bi{opacity:0;transform:translateY(18px);visibility:hidden;transition:opacity .45s ease,transform .45s ease,visibility 0s linear .45s}
+  #stage .bi.shown{opacity:1;transform:none;visibility:visible;transition:opacity .45s ease,transform .45s ease,visibility 0s}
+  #stage .instant .bi{transition:none!important}
+  @media (prefers-reduced-motion:reduce){#stage .bi,#stage .bi.shown{transition:none;transform:none}}
+  #bar button[aria-pressed="true"]{background:#F2A65A;color:#1B2A41}
   #bar{position:fixed;left:0;right:0;bottom:0;height:56px;display:flex;align-items:center;justify-content:center;gap:12px;background:#0E1520;color:#DCE3EC;font-size:15px;padding:0 max(16px,env(safe-area-inset-right,0px)) env(safe-area-inset-bottom,0px) max(16px,env(safe-area-inset-left,0px))}
   #bar button{font:inherit;background:#24364F;color:#F6F2E9;border:none;border-radius:8px;padding:8px 14px;cursor:pointer}
   #bar button:focus-visible{outline:3px solid #F2A65A;outline-offset:2px}
@@ -642,6 +647,7 @@
   <button type="button" id="next" aria-label="다음 슬라이드">다음 ▶</button>
   <button type="button" id="toggle-notes" class="wide">발표 메모 (N)</button>
   <button type="button" id="full" class="wide">전체 화면 (F)</button>
+  <button type="button" id="builds" class="wide" aria-pressed="false" title="켜면 슬라이드 내용이 처음부터 한꺼번에 보입니다">한 번에 보기 (A)</button>
 </nav>
 <script src="assets/qrcode.js"></script>
 <script>
@@ -687,9 +693,57 @@
     document.getElementById('notes-text').textContent=a?a.textContent.trim():'메모가 없습니다.';
     if(location.hash!=='#slide-'+(i+1)) history.replaceState(null,'','#slide-'+(i+1));
   }
+
+  // 단계별로 보여 주기: 슬라이드를 넘기면 제목만 보이고, 다음을 누를 때마다 내용이 하나씩 나타남
+  let allAtOnce=false; try{allAtOnce=localStorage.getItem('deck-all-at-once')==='1';}catch(e){}
+  const tag=el=>el.tagName.toLowerCase();
+  const isBlock=el=>tag(el)!=='aside'&&tag(el)!=='script'&&!(el.getAttribute('style')||'').includes('position:absolute');
+  const hasContent=el=>tag(el)==='svg'||el.textContent.trim()!==''||!!el.querySelector('svg,img,table,#helper-qr')||el.id==='helper-qr';
+  function split(el,depth){
+    const st=el.getAttribute('style')||'';
+    const kids=[...el.children].filter(isBlock).filter(hasContent);
+    if(tag(el)!=='div'||kids.length<2) return [[el]];
+    const isRow=/flex-direction:row|display:grid/.test(st);
+    if(isRow){
+      if(/flex-wrap:wrap/.test(st)||kids.length>6) return [[el]];
+      const out=[];let pend=[];
+      kids.forEach(k=>{const joiner=tag(k)==='svg'||(tag(k)==='p'&&k.textContent.trim().length<=2);
+        if(joiner)pend.push(k);else{out.push(pend.concat([k]));pend=[];}});
+      if(pend.length&&out.length)out[out.length-1].push(...pend);
+      return out;
+    }
+    if(depth===1) return kids.flatMap(k=>split(k,2));
+    return [[el]];
+  }
+  slides.forEach(sl=>{
+    sl._steps=[];
+    if(sl.id==='cover'||sl.id==='closing')return;
+    const kids=[...sl.children].filter(isBlock).filter(hasContent);
+    if(kids.length<2)return;
+    kids.slice(1).forEach(k=>sl._steps.push(...split(k,1)));
+    sl._steps.forEach(g=>g.forEach(el=>el.classList.add('bi')));
+  });
+  let step=0;
+  function render(instant){
+    const sl=slides[i],g=sl._steps;
+    if(instant)sl.classList.add('instant');
+    g.forEach((grp,k)=>grp.forEach(el=>el.classList.toggle('shown',allAtOnce||k<step)));
+    if(instant){void sl.offsetWidth;sl.classList.remove('instant');}
+    const left=allAtOnce?0:g.length-step;
+    document.getElementById('count').textContent=(i+1)+' / '+slides.length+(left>0?' ▸':'');
+  }
+  function go(n,revealAll){show(n);step=revealAll?slides[i]._steps.length:0;render(true);}
+  function next(){if(!allAtOnce&&step<slides[i]._steps.length){step++;render(false);}else if(i<slides.length-1)go(i+1,false);}
+  function prev(){if(!allAtOnce&&step>0){step--;render(false);}else if(i>0)go(i-1,true);}
+  function toggleBuilds(){
+    allAtOnce=!allAtOnce;try{localStorage.setItem('deck-all-at-once',allAtOnce?'1':'0');}catch(e){}
+    const b=document.getElementById('builds');b.setAttribute('aria-pressed',String(allAtOnce));
+    step=allAtOnce?slides[i]._steps.length:step;render(true);
+  }
   function fromHash(){const m=location.hash.match(/^#slide-(\d+)$/);return m?parseInt(m[1],10)-1:0;}
-  document.getElementById('prev').onclick=()=>show(i-1);
-  document.getElementById('next').onclick=()=>show(i+1);
+  document.getElementById('prev').onclick=prev;
+  document.getElementById('next').onclick=next;
+  document.getElementById('builds').onclick=toggleBuilds;
   const notes=document.getElementById('notes');
   document.getElementById('toggle-notes').onclick=()=>{notes.hidden=!notes.hidden;};
   function full(){
@@ -700,19 +754,20 @@
   document.addEventListener('fullscreenchange',()=>{document.body.classList.toggle('present',!!document.fullscreenElement);setTimeout(fit,50);});
   document.addEventListener('keydown',e=>{
     if(e.target.closest&&e.target.closest('input,textarea'))return;
-    if(['ArrowRight','PageDown',' ','Enter'].includes(e.key)){e.preventDefault();show(i+1);}
-    else if(['ArrowLeft','PageUp','Backspace'].includes(e.key)){e.preventDefault();show(i-1);}
-    else if(e.key==='Home')show(0);
-    else if(e.key==='End')show(slides.length-1);
+    if(['ArrowRight','PageDown',' ','Enter'].includes(e.key)){e.preventDefault();next();}
+    else if(['ArrowLeft','PageUp','Backspace'].includes(e.key)){e.preventDefault();prev();}
+    else if(e.key==='Home')go(0,false);
+    else if(e.key==='End')go(slides.length-1,false);
+    else if(e.key==='a'||e.key==='A'){toggleBuilds();}
     else if(e.key==='n'||e.key==='N'){notes.hidden=!notes.hidden;}
     else if(e.key==='f'||e.key==='F'){full();}
   });
   let tx=null;
   vp.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;},{passive:true});
-  vp.addEventListener('touchend',e=>{if(tx===null)return;const d=e.changedTouches[0].clientX-tx;if(Math.abs(d)>50)show(d<0?i+1:i-1);tx=null;});
-  vp.addEventListener('click',e=>{if(e.target.closest('a'))return;const sg=e.target.closest('#topbar .seg');if(sg){show(parseInt(sg.dataset.first,10));return;}if(e.target.closest('#topbar'))return;const r=vp.getBoundingClientRect();show(e.clientX>r.left+r.width/2?i+1:i-1);});
+  vp.addEventListener('touchend',e=>{if(tx===null)return;const d=e.changedTouches[0].clientX-tx;if(Math.abs(d)>50){if(d<0)next();else prev();}tx=null;});
+  vp.addEventListener('click',e=>{if(e.target.closest('a'))return;const sg=e.target.closest('#topbar .seg');if(sg){go(parseInt(sg.dataset.first,10),false);return;}if(e.target.closest('#topbar'))return;const r=vp.getBoundingClientRect();if(e.clientX>r.left+r.width/2)next();else prev();});
   window.addEventListener('resize',fit);
-  window.addEventListener('hashchange',()=>show(fromHash()));
+  window.addEventListener('hashchange',()=>go(fromHash(),false));
 
   // 프롬프트 도우미 QR: 지금 열려 있는 사이트 주소 + /helper/
   const box=document.getElementById('helper-qr');
@@ -724,7 +779,8 @@
     box.innerHTML='<svg viewBox="0 0 '+t+' '+t+'" width="340" height="340" xmlns="http://www.w3.org/2000/svg"><rect width="'+t+'" height="'+t+'" fill="#FFFFFF"/><path d="'+d+'" fill="#1F2937"/></svg>';
     const u=document.getElementById('helper-url');if(u)u.innerHTML='vibe-coding-lecture-bay<br>.vercel.app/helper';
   }
-  fit();show(fromHash());
+  document.getElementById('builds').setAttribute('aria-pressed',String(allAtOnce));
+  fit();go(fromHash(),false);
 })();
 </script>
 </body>
