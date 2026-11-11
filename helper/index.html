@@ -65,8 +65,16 @@ aside.out{position:sticky;top:calc(env(safe-area-inset-top,0px) + 16px);display:
 .status{display:flex;gap:6px;flex-wrap:wrap}
 .dot{font-size:12px;font-weight:700;padding:3px 9px;border-radius:999px;border:1px solid var(--line);color:var(--muted)}
 .dot.done{border-color:var(--ok);color:var(--ok)}
-#result{font-family:var(--font-code);font-size:14px;line-height:1.65;white-space:pre-wrap;word-break:break-word;background:var(--code-bg);border:1px solid var(--line);border-radius:10px;padding:14px;margin:0;max-height:min(58vh,560px);overflow:auto;width:100%;color:var(--ink)}
+#result{font-family:var(--font-code);font-size:14px;line-height:1.65;white-space:pre-wrap;word-break:break-word;background:var(--code-bg);border:1px solid var(--line);border-radius:10px;padding:14px;margin:0;max-height:max(220px,calc(100vh - 560px));overflow:auto;width:100%;color:var(--ink)}
 .copy{font:inherit;font-size:17px;font-weight:700;padding:13px 16px;border:none;border-radius:12px;background:var(--accent);color:var(--accent-ink);cursor:pointer}
+.go{display:flex;flex-direction:column;gap:10px;border-top:1px solid var(--line);padding-top:14px}
+.go-title{margin:0;font-size:15px;font-weight:700}
+.go-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.go-btn{display:flex;flex-direction:column;align-items:center;gap:2px;padding:12px 8px;border-radius:12px;border:1.5px solid var(--accent);background:var(--accent-soft);color:var(--ink);font-weight:700;font-size:16px;text-decoration:none;text-align:center}
+.go-btn small{font-size:12px;font-weight:400;color:var(--muted)}
+.go-btn:hover{background:var(--surface)}
+.go-btn:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+@media (max-height:780px){aside.out{position:static}}
 .msg{min-height:1.4em;font-size:14px;color:var(--ok);margin:0}
 .hint{font-size:14px;color:var(--muted);margin:0}
 .next{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:10px}
@@ -82,15 +90,11 @@ aside.out{position:sticky;top:calc(env(safe-area-inset-top,0px) + 16px);display:
     <p class="lead">다섯 가지 질문에 답하면 AI에게 보낼 프롬프트가 오른쪽(휴대폰은 아래)에 완성됩니다. 복사해서 Claude, ChatGPT, Gemini 중 하나에 붙여 넣으세요.</p>
   </header>
 
-  <div class="presets" role="group" aria-label="예시 불러오기">
-    <span>예시 불러오기</span>
-    <button type="button" class="chip" data-preset="picker">발표자 뽑기</button>
-    <button type="button" class="chip" data-preset="timer">활동 타이머</button>
-    <button type="button" class="chip" data-preset="quiz">OX 퀴즈</button>
-    <button type="button" class="chip" data-preset="cards">용어 카드</button>
-    <button type="button" class="chip" data-preset="groups">모둠 편성기</button>
-    <button type="button" class="chip" data-preset="score">칭찬 점수판</button>
-    <button type="button" class="chip ghost" id="clear">모두 비우기</button>
+  <div class="presets" role="group" aria-label="실습 순서">
+    <span>실습 순서</span>
+    <button type="button" class="chip" data-preset="picker"><b>①</b> 함께 보기 · 발표자 뽑기</button>
+    <button type="button" class="chip" data-preset="timer"><b>②</b> 예시 · 활동 타이머</button>
+    <button type="button" class="chip" id="clear"><b>③</b> 직접 만들기 · 빈칸</button>
   </div>
 
   <div class="layout">
@@ -168,6 +172,15 @@ aside.out{position:sticky;top:calc(env(safe-area-inset-top,0px) + 16px);display:
       <pre id="result" tabindex="0"></pre>
       <button type="button" class="copy" id="copy">프롬프트 복사하기</button>
       <p class="msg" id="msg" role="status"></p>
+      <div class="go">
+        <p class="go-title">복사하고 바로 열기</p>
+        <div class="go-row">
+          <a class="go-btn" href="https://chatgpt.com/" target="_blank" rel="noopener" data-ai="ChatGPT">ChatGPT<small>캔버스</small></a>
+          <a class="go-btn" href="https://gemini.google.com/app" target="_blank" rel="noopener" data-ai="Gemini">Gemini<small>Canvas</small></a>
+          <a class="go-btn" href="https://claude.ai/new" target="_blank" rel="noopener" data-ai="Claude">Claude<small>아티팩트</small></a>
+        </div>
+        <p class="hint">버튼을 누르면 프롬프트가 복사되고 새 창이 열립니다. 대화창에 붙여 넣기(Ctrl+V, 휴대폰은 길게 누르기)만 하면 됩니다. Gemini는 붙여 넣기 전에 입력창의 ‘Canvas’(또는 ‘도구’ 안의 Canvas)를 켜 주세요.</p>
+      </div>
       <p class="hint">비어 있는 칸은 [대괄호]로 남습니다. 전부 채우지 않아도 되지만, 3번 ‘어떤 순서로’는 꼭 채워 주세요.</p>
     </aside>
   </div>
@@ -189,16 +202,8 @@ aside.out{position:sticky;top:calc(env(safe-area-inset-top,0px) + 16px);display:
   const PRESETS = {
     picker:{name:"오늘의 발표자",goal:"발표할 학생을 공정하게 무작위로 뽑는다",who:"교사",dev:["교실 TV·전자칠판"],when:"수업 중 발표자를 정할 때",
       s1:"시작 번호와 끝 번호(예: 1~28번)를 입력한다",s2:"‘뽑기’ 버튼을 누르면 번호가 빠르게 돌다가 한 명이 크게 나타난다",s3:"뽑힌 번호는 아래 목록에 쌓이고 다음 뽑기에서 빠진다",extra:"‘처음부터 다시’ 버튼, 뽑힐 때 축하 효과",mood:"밝고 경쾌하게",color:""},
-    timer:{name:"모둠 활동 타이머",goal:"활동 단계마다 남은 시간을 모두가 볼 수 있게 보여 준다",who:"교사",dev:["교실 TV·전자칠판"],when:"모둠 활동을 여러 단계로 진행할 때",
-      s1:"활동 단계 이름과 시간(예: 자료 읽기 5분, 토의 10분, 발표 준비 5분)을 입력한다",s2:"‘시작’을 누르면 현재 단계 이름과 남은 시간이 화면 가득 크게 나타난다",s3:"한 단계가 끝나면 알림과 함께 다음 단계로 자동으로 넘어간다",extra:"일시정지 버튼, 1분 남았을 때 색이 바뀌기",mood:"깔끔하고 차분하게",color:""},
-    quiz:{name:"단원 OX 퀴즈",goal:"배운 내용을 학생이 스스로 확인한다",who:"교사와 학생 모두",dev:["학생 휴대폰"],when:"수업 마무리 5분 동안",
-      s1:"교사가 문제, 정답(O 또는 X), 해설을 10개까지 입력한다",s2:"학생이 O나 X를 누르면 정답 여부와 해설이 바로 나온다",s3:"마지막 문제가 끝나면 맞힌 개수와 틀린 문제를 다시 보여 준다",extra:"문제 순서 섞기",mood:"게임처럼 신나게",color:""},
-    cards:{name:"역사 용어 카드",goal:"핵심 용어와 뜻을 카드로 뒤집으며 복습한다",who:"학생",dev:["학생 휴대폰","태블릿"],when:"단원 복습이나 시험 전 자습 시간에",
-      s1:"교사가 용어와 뜻을 한 줄에 하나씩 입력한다",s2:"학생이 카드를 누르면 앞면(용어)과 뒷면(뜻)이 뒤집힌다",s3:"‘알아요’와 ‘다시 볼래요’를 눌러 다시 볼 카드만 모은다",extra:"카드 섞기 버튼",mood:"옛 문서·한지 느낌으로",color:""},
-    groups:{name:"모둠 편성기",goal:"번호로 모둠을 공정하게 무작위로 나눈다",who:"교사",dev:["교실 TV·전자칠판","PC·노트북"],when:"협동학습을 시작하기 전에",
-      s1:"학생 수(번호 범위)와 모둠 수를 입력한다",s2:"‘편성하기’를 누르면 번호가 모둠별 칸에 고르게 나뉘어 나타난다",s3:"마음에 들지 않으면 ‘다시 섞기’로 새로 편성한다",extra:"결석한 번호는 빼고 편성하기",mood:"깔끔하고 차분하게",color:""},
-    score:{name:"모둠 칭찬 점수판",goal:"모둠 활동에서 칭찬 점수를 쌓아 보여 준다",who:"교사",dev:["교실 TV·전자칠판"],when:"모둠 활동이 이어지는 수업 내내",
-      s1:"모둠 이름과 모둠 수를 입력한다",s2:"모둠 카드의 ‘+1’ 버튼을 누르면 점수가 오르고 살짝 반짝인다",s3:"점수 순서대로 모둠 순위가 바뀌어 보인다",extra:"점수 초기화 버튼, 실수로 누른 점수 되돌리기",mood:"밝고 경쾌하게",color:""}
+    timer:{name:"모둠 활동 타이머",goal:"활동마다 남은 시간을 교실 모두가 한눈에 보게 한다",who:"교사",dev:["교실 TV·전자칠판"],when:"모둠 활동이나 개별 활동을 단계별로 진행할 때",
+      s1:"활동 이름과 시간(예: 혼자 생각하기 3분, 모둠 토의 7분, 발표 준비 5분)을 입력한다",s2:"‘시작’을 누르면 지금 하는 활동 이름과 남은 시간이 화면 가득 크게 나타난다",s3:"한 활동이 끝나면 알림 소리와 함께 다음 활동으로 자동으로 넘어간다",extra:"일시정지 버튼, 1분 남으면 숫자 색이 바뀌기",mood:"깔끔하고 차분하게",color:""}
   };
   const FIELDS = ["name","goal","when","s1","s2","s3","extra","color"];
   const CONDS = {
@@ -255,6 +260,7 @@ aside.out{position:sticky;top:calc(env(safe-area-inset-top,0px) + 16px);display:
 
   function setPresetButtons(key){
     document.querySelectorAll('[data-preset]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.preset === key)));
+    $("clear").setAttribute('aria-pressed', String(key === "blank"));
   }
   function load(key){
     const p = PRESETS[key]; if (!p) return;
@@ -267,7 +273,7 @@ aside.out{position:sticky;top:calc(env(safe-area-inset-top,0px) + 16px);display:
   function clearAll(){
     FIELDS.forEach(f => $(f).value = "");
     document.querySelectorAll('input[name="who"],input[name="mood"],input[name="dev"]').forEach(x => x.checked = false);
-    setPresetButtons(null); build(); $("name").focus();
+    setPresetButtons("blank"); build(); $("name").focus();
   }
 
   function save(){
@@ -288,7 +294,7 @@ aside.out{position:sticky;top:calc(env(safe-area-inset-top,0px) + 16px);display:
     }catch(e){ return false; }
   }
 
-  $("f").addEventListener("input", () => { setPresetButtons(null); build(); });
+  $("f").addEventListener("input", build);
   $("f").addEventListener("submit", e => e.preventDefault());
   document.querySelectorAll('[data-preset]').forEach(b => b.addEventListener("click", () => load(b.dataset.preset)));
   $("clear").addEventListener("click", clearAll);
@@ -304,6 +310,16 @@ aside.out{position:sticky;top:calc(env(safe-area-inset-top,0px) + 16px);display:
     if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, fallback);
     else fallback();
   });
+
+  document.querySelectorAll('.go-btn').forEach(a => a.addEventListener("click", () => {
+    const name = a.dataset.ai;
+    const ok = () => { $("msg").textContent = "복사했어요. 새로 열린 " + name + " 창에 붙여 넣으세요."; };
+    const no = () => { $("msg").textContent = name + " 창이 열렸어요. 자동 복사가 막혀 있으니 위 프롬프트를 직접 복사해 붙여 넣으세요."; };
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText($("result").textContent).then(ok, no);
+      else no();
+    } catch (e) { no(); }
+  }));
 
   if (restore()) { setPresetButtons(null); build(); } else { load("picker"); }
 })();
