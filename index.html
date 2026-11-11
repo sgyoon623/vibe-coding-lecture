@@ -46,6 +46,7 @@
   #stage .bi{opacity:0;transform:translateY(18px);visibility:hidden;transition:opacity .45s ease,transform .45s ease,visibility 0s linear .45s}
   #stage .bi.shown{opacity:1;transform:none;visibility:visible;transition:opacity .45s ease,transform .45s ease,visibility 0s}
   #stage .instant .bi{transition:none!important}
+  #stage .cellwrap{display:inline-block}
   @media (prefers-reduced-motion:reduce){#stage .bi,#stage .bi.shown{transition:none;transform:none}}
   #bar button[aria-pressed="true"]{background:#F2A65A;color:#1B2A41}
   #bar{position:fixed;left:0;right:0;bottom:0;height:56px;display:flex;align-items:center;justify-content:center;gap:12px;background:#0E1520;color:#DCE3EC;font-size:15px;padding:0 max(16px,env(safe-area-inset-right,0px)) env(safe-area-inset-bottom,0px) max(16px,env(safe-area-inset-left,0px))}
@@ -136,7 +137,7 @@
 <p style="font-size:32px;font-weight:700;color:#B4501E">1 · 바이브코딩이란?</p>
 <h2 style="font-family:'Noto Sans KR', Arial, sans-serif;font-size:84px;font-weight:900;line-height:1.15;color:#1B2A41">예전 방식과 무엇이 다를까?</h2>
 </div>
-<table style="width:1664px;font-size:32px;color:#1F2937;font-family:'Noto Sans KR', Arial, sans-serif">
+<table data-build="columns" style="width:1664px;font-size:32px;color:#1F2937;font-family:'Noto Sans KR', Arial, sans-serif">
 <tr style="background:#1B2A41"><th style="width:22%;color:#F6F2E9;padding:20px 28px">구분</th><th style="width:39%;color:#BFC8D6;padding:20px 28px">예전 방식</th><th style="width:39%;color:#F2A65A;padding:20px 28px">바이브코딩</th></tr>
 <tr style="background:#FFFDF8"><td style="padding:20px 28px"><b>시작하려면</b></td><td style="padding:20px 28px">프로그래밍 문법부터 공부</td><td style="padding:20px 28px">하고 싶은 일을 문장으로 설명</td></tr>
 <tr style="background:#F6F2E9"><td style="padding:20px 28px"><b>내가 하는 일</b></td><td style="padding:20px 28px">코드를 한 줄씩 직접 작성</td><td style="padding:20px 28px">설명하고, 확인하고, 고쳐 달라고 요청</td></tr>
@@ -701,6 +702,14 @@
   const hasContent=el=>tag(el)==='svg'||el.textContent.trim()!==''||!!el.querySelector('svg,img,table,#helper-qr')||el.id==='helper-qr';
   function split(el,depth){
     const st=el.getAttribute('style')||'';
+    if(tag(el)==='table'&&el.dataset.build==='columns'){
+      // 표를 열 단위로: 먼저 표와 첫 열, 그다음 열마다 한 번씩
+      const rows=[...el.rows],n=rows.length?rows[0].cells.length:0,groups=[[el]];
+      for(let c=1;c<n;c++){const g=[];rows.forEach(r=>{const cell=r.cells[c];if(!cell)return;
+        const sp=document.createElement('span');sp.className='cellwrap';while(cell.firstChild)sp.appendChild(cell.firstChild);cell.appendChild(sp);g.push(sp);});
+        groups.push(g);}
+      return groups;
+    }
     const kids=[...el.children].filter(isBlock).filter(hasContent);
     if(tag(el)!=='div'||kids.length<2) return [[el]];
     const isRow=/flex-direction:row|display:grid/.test(st);
