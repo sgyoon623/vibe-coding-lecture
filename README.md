@@ -4,10 +4,10 @@
 
 | 주소 | 내용 |
 |---|---|
-| `https://(프로젝트 이름).vercel.app` | 강의 슬라이드 (20장) |
+| `https://(프로젝트 이름).vercel.app` | 강의 슬라이드 (22장, 마지막 1장은 선택용 보너스) |
 | `https://(프로젝트 이름).vercel.app/helper` | 앱 만들기 프롬프트 도우미 |
 
-슬라이드 18번의 QR코드와 주소는 `https://vibe-coding-lecture-bay.vercel.app/helper` 로 고정되어 있습니다. Vercel 주소를 바꾸면 QR코드도 새로 만들어야 합니다.
+슬라이드 17번의 QR코드와 주소는 `https://vibe-coding-lecture-bay.vercel.app/helper` 로 고정되어 있습니다. Vercel 주소를 바꾸면 index.html 안의 이 주소도 함께 바꿔야 합니다.
 
 ## 폴더 구성
 
@@ -37,7 +37,7 @@ vibe-coding-lecture/
 4. **확인**
    - 1분 정도 뒤 나오는 주소를 열면 슬라이드가 보입니다.
    - 주소 뒤에 `/helper` 를 붙여 휴대폰으로 열어 봅니다.
-   - 슬라이드 18번의 QR코드를 휴대폰으로 찍어 도우미가 열리는지 확인합니다.
+   - 슬라이드 17번의 QR코드를 휴대폰으로 찍어 도우미가 열리는지 확인합니다.
 
 > 나중에 내용을 고치면 GitHub 저장소에 파일을 다시 올리기만 하면 Vercel이 자동으로 새로 배포합니다.
 
